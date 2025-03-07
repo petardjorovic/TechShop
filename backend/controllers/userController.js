@@ -11,7 +11,7 @@ const register = catchAsync(async (req, res, next) => {
     if (!user) {
         const newUser = new UserModel(req.body);
         const savedUser = await newUser.save();
-        await new Email(req.body, 'www.localhost.com').sendWelcome();
+        await new Email({ email: savedUser.email, username: savedUser.username }, 'http://localhost:5173').sendWelcome();
         return res.status(200).json({
             status: 'success',
             message: 'User successufully registered',

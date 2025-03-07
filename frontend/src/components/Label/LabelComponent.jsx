@@ -1,9 +1,9 @@
 import React from "react";
 
-function LabelComponent({ children, htmlFor, labelColor }) {
+function LabelComponent({ children, htmlFor, color }) {
   return (
     <>
-      <label htmlFor={htmlFor} style={{ color: labelColor && "red" }}>
+      <label htmlFor={htmlFor} style={{ color: color && "red" }}>
         {children}
       </label>
     </>
