@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./navigation.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrency } from "../../store/currency/currencySlice";
 import { toggleLoginForm } from "../../store/loginRegister/loginRegisterSlice";
 import { localStorageConfig } from "../../config/LocalStorageConfig";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { removeUser } from "../../store/user/userSlice";
 
 function NavigationComponent() {
   const dispatch = useDispatch();
   const { currency, symbol } = useSelector((state) => state.currencyStore);
   const { isLoginForm } = useSelector((state) => state.loginRegisterStore);
+  const { user } = useSelector((state) => state.userStore);
+  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem(localStorageConfig.CURRENCY, currency);
@@ -21,6 +25,38 @@ function NavigationComponent() {
 
   const toggleForm = () => {
     dispatch(toggleLoginForm(!isLoginForm));
+  };
+
+  const logoutUser = () => {
+    localStorage.removeItem(localStorageConfig.USER);
+    dispatch(removeUser);
+    navigate("/authorization");
+  };
+
+  const navigationView = () => {
+    return localStorage.getItem(localStorageConfig.USER) ? (
+      <div className="dropdown">
+        <li className="dropbtn">
+          <a>
+            {user.username} <IoMdArrowDropdown size={25} />
+          </a>
+        </li>
+        <div className="dropdown-content">
+          <li>
+            <NavLink>Profile</NavLink>
+          </li>
+          <li>
+            <a onClick={logoutUser}>Logout</a>
+          </li>
+        </div>
+      </div>
+    ) : (
+      <li>
+        <NavLink to={"/authorization"} onClick={toggleForm}>
+          {isLoginForm ? "Login" : "Register"}
+        </NavLink>
+      </li>
+    );
   };
 
   return (
@@ -50,11 +86,7 @@ function NavigationComponent() {
                 <li>
                   <NavLink to={"/contact"}>Contact</NavLink>
                 </li>
-                <li>
-                  <NavLink to={"/authorization"} onClick={toggleForm}>
-                    {isLoginForm ? "Login" : "Register"}
-                  </NavLink>
-                </li>
+                {navigationView()}
               </ul>
             </nav>
           </div>

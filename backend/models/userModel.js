@@ -19,6 +19,7 @@ const userSchema = new Schema(
         password: {
             type: String,
             required: [true, 'Password is required'],
+            select: false,
             // validate: {
             //     validator: (field) => {
             //         //* Password must contain one lowercase letter, one uppercase letter,
@@ -62,6 +63,10 @@ userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 12);
 });
+
+userSchema.methods.isPasswordCorrect = async (candidatePassword, currentPassword) => {
+    return await bcrypt.compare(candidatePassword, currentPassword);
+};
 
 const UserModel = mongoose.model('User', userSchema);
 module.exports = UserModel;

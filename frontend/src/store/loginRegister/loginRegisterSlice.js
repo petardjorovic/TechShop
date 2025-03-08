@@ -9,10 +9,10 @@ const loginRegisterSlice = createSlice({
     toggleLoginForm: (state, action) => {
       state.isLoginForm = action.payload;
     },
-    showLoginForm: (state, action) => {
+    showLoginForm: (state) => {
       state.isLoginForm = false;
     },
-    showRegisterForm: (state, action) => {
+    showRegisterForm: (state) => {
       state.isLoginForm = true;
     },
   },

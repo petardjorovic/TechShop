@@ -83,7 +83,7 @@ function RegisterFormCmponent() {
             </LabelComponent>
             <InputComponent
               id={"email"}
-              placeholder={"example@mail.com"}
+              placeholder={"email@example.com"}
               type={"text"}
               onChange={handleChange}
               inputColor={isEmailEmpty || isEmailValid}
