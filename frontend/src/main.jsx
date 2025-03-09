@@ -10,6 +10,10 @@ import store from "./store/store.js";
 import ShopPage from "./pages/Shop/ShopPage.jsx";
 import ContactPage from "./pages/Contact/ContactPage.jsx";
 import AuthorizationPage from "./pages/Authorization/AuthorizationPage.jsx";
+import DashboardPage from "./pages/Dashboard/DashboardPage.jsx";
+
+//* protection
+import AdminProtect from "./AdminComponents/AdminProtect/AdminProtect.jsx";
 
 //* router
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -30,6 +34,14 @@ const router = createBrowserRouter([
       {
         path: "/authorization",
         element: <AuthorizationPage />,
+      },
+      {
+        path: "/dashboard",
+        element: (
+          <AdminProtect>
+            <DashboardPage />
+          </AdminProtect>
+        ),
       },
     ],
   },

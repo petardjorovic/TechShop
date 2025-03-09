@@ -55,6 +55,13 @@ header {
           gap: 2rem;
           list-style: none;
 
+          li {
+            a {
+              color: black;
+              text-decoration: none;
+            }
+          }
+
           .dropdown {
             position: relative;
             display: inline-block;
@@ -63,9 +70,17 @@ header {
               border: none;
 
               a {
+                display: flex;
+                align-items: center;
                 svg {
                   display: inline;
+                  transition: transform 0.3s linear;
                 }
+              }
+
+              &:hover svg {
+                transform: rotate(90deg);
+                transition: transform 0.3s linear;
               }
             }
             .dropdown-content {

@@ -33,7 +33,7 @@ const login = catchAsync(async (req, res, next) => {
     const correctPassword = await user.isPasswordCorrect(req.body.password, user.password);
     if (!correctPassword) return next(new AppError('Wrong credentials', 401));
 
-    const { password, ...dataUser } = user.toObject();
+    const { password, __v, _id, createdAt, updatedAt, ...dataUser } = user.toObject();
     return res.status(200).json({
         status: 'success',
         message: 'User successufully logged',

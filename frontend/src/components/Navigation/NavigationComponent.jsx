@@ -45,6 +45,11 @@ function NavigationComponent() {
           <li>
             <NavLink>Profile</NavLink>
           </li>
+          {user.role === "admin" ? (
+            <li>
+              <NavLink to={"/dashboard"}>Dashboard</NavLink>
+            </li>
+          ) : null}
           <li>
             <a onClick={logoutUser}>Logout</a>
           </li>
