@@ -24,14 +24,14 @@ function App() {
   }, []);
 
   //* Togglujemo navigaciju u odnosu na to da li smo na Dashboardu
-  useEffect(() => {
-    if (location.pathname === "/dashboard") dispatch(showDashboard(true));
-    else dispatch(showDashboard(false));
-  }, [location]);
+  // useEffect(() => {
+  //   if (location.pathname === "/dashboard") dispatch(showDashboard(true));
+  //   else dispatch(showDashboard(false));
+  // }, [location]);
   return (
     <>
       <LoaderComponent />
-      {!isDashboard && <NavigationComponent />}
+      <NavigationComponent />
       <Outlet />
       <ToastContainer />
     </>

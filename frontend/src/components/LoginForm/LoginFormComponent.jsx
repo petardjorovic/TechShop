@@ -48,7 +48,6 @@ function LoginFormComponent() {
     if (res.status === "success") {
       localStorage.setItem(localStorageConfig.USER, JSON.stringify(res.user));
       dispatch(setUser(res.user));
-      toast.success(res.message);
       navigate("/");
     } else {
       toast.error(res.message);

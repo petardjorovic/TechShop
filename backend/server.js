@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const AppError = require('./utils/AppError');
 const errorController = require('./controllers/errorController');
+const path = require('path');
 
 mongoose
     .connect(process.env.MONGODB_URI)
@@ -16,6 +17,9 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
+
+//* Ucitaj mi staticke fajlove
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //* routes
 app.use(require('./routes'));

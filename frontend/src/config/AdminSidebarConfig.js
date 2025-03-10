@@ -5,9 +5,9 @@ export const adminSidebarConfig = [
     url: "",
   },
   {
-    name: "Add Prodcuts",
+    name: "Add Product",
     icon: "ion-plus-circled",
-    url: "add-products",
+    url: "add-product",
   },
   {
     name: "Users",
