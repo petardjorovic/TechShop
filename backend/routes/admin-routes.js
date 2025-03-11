@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const productController = require('../controllers/productController');
+const adminController = require('../controllers/adminController');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
-router.route('/product').post(upload.single('file'), productController.addProduct);
+router.route('/product').post(upload.single('file'), adminController.addProduct);
 
 module.exports = router;

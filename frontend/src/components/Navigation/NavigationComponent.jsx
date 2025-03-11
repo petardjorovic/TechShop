@@ -80,7 +80,6 @@ function NavigationComponent() {
               <option value="USD">USD</option>
               <option value="RSD">RSD</option>
             </select>
-            <span>{symbol}</span>
           </div>
           <div className="navigation">
             <nav>

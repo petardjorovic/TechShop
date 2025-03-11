@@ -1,19 +1,16 @@
 const ProductModel = require('../models/productModel');
 const AppError = require('../utils/AppError');
-const catchAsync = require('../utils/catchAsync');
 
-const addProduct = catchAsync(async (req, res, next) => {
-    const product = JSON.parse(req.body.product);
+const getAllProduct = async (req, res, next) => {
+    const products = await ProductModel.find();
+    if (products.length > 0) {
+        return res.status(200).json({
+            status: 'success',
+            products: products,
+        });
+    } else {
+        return next(new AppError("There isn't any product in database", 404));
+    }
+};
 
-    if (req.file) product.image = req.file.filename;
-    else return next(new AppError('Image of product is required', 404));
-    const newProduct = new ProductModel(product);
-    const savedProduct = await newProduct.save();
-    res.status(200).json({
-        status: 'success',
-        message: 'Successufully added product',
-        product: newProduct,
-    });
-});
-
-module.exports = { addProduct };
+module.exports = { getAllProduct };

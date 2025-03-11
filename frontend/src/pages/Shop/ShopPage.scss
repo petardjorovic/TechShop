@@ -1,0 +1,12 @@
+@import "../../assets/sass/main.scss";
+
+.container {
+  .products-wrapper {
+    padding: 3rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+  }
+}

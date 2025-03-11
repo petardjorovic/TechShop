@@ -7,10 +7,21 @@ export const addProduct = async (product) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(res, "res iz servisa");
-    return res;
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+    return {
+      status: res.data.err.status,
+      message: res.data.message,
+    };
   } catch (error) {
     console.log(error, "err iz servisa");
-    return error;
+    return {
+      status: error.response.data.err.status,
+      message: error.response.data.message,
+    };
   }
 };

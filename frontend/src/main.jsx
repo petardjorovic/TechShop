@@ -11,6 +11,7 @@ import ShopPage from "./pages/Shop/ShopPage.jsx";
 import ContactPage from "./pages/Contact/ContactPage.jsx";
 import AuthorizationPage from "./pages/Authorization/AuthorizationPage.jsx";
 import DashboardPage from "./pages/Dashboard/DashboardPage.jsx";
+import SingleProductPage from "./pages/SingleProduct/SingleProductPage.jsx";
 
 //* Admin's components
 import StatisticsComponent from "./AdminComponents/Statistics/StatisticsComponent.jsx";
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/authorization",
         element: <AuthorizationPage />,
+      },
+      {
+        path: "/product/:productId",
+        element: <SingleProductPage />,
       },
     ],
   },

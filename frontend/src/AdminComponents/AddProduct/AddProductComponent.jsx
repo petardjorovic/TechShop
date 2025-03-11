@@ -2,10 +2,11 @@ import LabelComponent from "../../components/Label/LabelComponent";
 import InputComponent from "../../components/Input/InputComponent";
 import ButtonComponent from "../../components/Button/ButtonComponent";
 import "./AddProductComponent.scss";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { addProduct } from "../../services/adminService";
 import { useDispatch } from "react-redux";
 import { showLoader } from "../../store/loader/loaderSlice";
+import { toast } from "react-toastify";
 
 function AddProductComponent() {
   const [product, setProduct] = useState({
@@ -15,6 +16,7 @@ function AddProductComponent() {
   });
   const [file, setFile] = useState(null);
   const dispatch = useDispatch();
+  const formRef = useRef();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -34,6 +36,18 @@ function AddProductComponent() {
     const res = await addProduct(newProduct);
     dispatch(showLoader(false));
     console.log(res, "res sa fronta");
+    if (res.status === "success") {
+      toast.success(res.message);
+      formRef.current.reset();
+      setProduct({
+        title: "",
+        description: "",
+        price: "",
+      });
+      setFile(null);
+    } else {
+      toast.error(res.message);
+    }
   };
 
   return (
@@ -41,7 +55,7 @@ function AddProductComponent() {
       <div className="content">
         <h1>AddProduct</h1>
       </div>
-      <form className="add-product-form" onSubmit={handleSubmit}>
+      <form className="add-product-form" ref={formRef} onSubmit={handleSubmit}>
         <div className="input-wrapper">
           <LabelComponent htmlFor={"title"}>Title</LabelComponent>
           <InputComponent
@@ -65,7 +79,7 @@ function AddProductComponent() {
           <InputComponent
             type={"number"}
             id={"price"}
-            placeholder={"Enter product price"}
+            placeholder={"Enter product price in EUROs"}
             onChange={handleChange}
           />
         </div>
