@@ -11,6 +11,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  transition: 0.3s linear all;
 
   .product-img {
     width: 290px;
@@ -56,14 +57,14 @@
     // }
   }
 
-  &:hover {
-    border: 2px solid gray;
+  // &:hover {
+  //   border: 2px solid gray;
 
-    cursor: pointer;
-  }
+  //   cursor: pointer;
+  // }
 
-  &:hover .product-img {
-    transform: scale(1.05);
-    transition: transform 0.3s ease-in;
-  }
+  // &:hover .product-img {
+  //   transform: scale(1.03);
+  //   transition: transform 0.3s ease-in;
+  // }
 }

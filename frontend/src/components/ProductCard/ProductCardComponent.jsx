@@ -4,6 +4,7 @@ import useConvertPrice from "../../utils/useConvertPrice";
 import { Link } from "react-router-dom";
 
 function ProductCardComponent({ product }) {
+  const convertPrice = useConvertPrice();
   return (
     <div className="product-card-wrapper">
       <img
@@ -19,7 +20,7 @@ function ProductCardComponent({ product }) {
         <Link to={`/product/${product._id}`}>
           <button className="btn btn-primary">View Product</button>
         </Link>
-        <span>{useConvertPrice(product.price)}</span>
+        <span>{convertPrice(product.price)}</span>
       </div>
     </div>
   );

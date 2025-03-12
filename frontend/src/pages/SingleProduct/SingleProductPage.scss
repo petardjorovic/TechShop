@@ -1,0 +1,66 @@
+@import "../../assets/sass/main.scss";
+
+.container {
+  .product-wrapper {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    .product-left {
+      display: flex;
+      flex: 0 0 50%;
+      //   border: 1px solid red;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 500px;
+        height: 500px;
+        object-fit: contain;
+        border: 1px solid gray;
+        border-radius: 8px;
+        padding: 1rem;
+      }
+    }
+
+    .product-right {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      flex: 0 0 50%;
+      //   border: 1px solid red;
+      padding-top: 3rem;
+
+      .bottom {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 3rem;
+
+        .price {
+          margin: 0;
+          padding-inline: 24px;
+          font-size: 1.5rem;
+          background-color: rgb(231, 54, 54);
+          border-radius: 20px;
+          color: white;
+        }
+
+        button {
+          margin: 0;
+          padding: 12px 24px;
+          border-radius: 8px;
+          border: none;
+          background-color: #0c21bc;
+          color: white;
+          transition: 0.3s ease-in;
+
+          &:hover {
+            background-color: #0b1a92;
+          }
+        }
+      }
+    }
+  }
+}

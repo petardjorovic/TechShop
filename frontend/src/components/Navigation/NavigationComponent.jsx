@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./navigation.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrency } from "../../store/currency/currencySlice";
@@ -7,6 +7,7 @@ import { toggleLoginForm } from "../../store/loginRegister/loginRegisterSlice";
 import { localStorageConfig } from "../../config/LocalStorageConfig";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { removeUser } from "../../store/user/userSlice";
+import CartComponent from "../CartComponent/CartComponent";
 
 function NavigationComponent() {
   const dispatch = useDispatch();
@@ -89,6 +90,9 @@ function NavigationComponent() {
                 </li>
                 <li>
                   <NavLink to={"/contact"}>Contact</NavLink>
+                </li>
+                <li>
+                  <CartComponent />
                 </li>
                 {navigationView()}
               </ul>

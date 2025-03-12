@@ -12,6 +12,7 @@ import ContactPage from "./pages/Contact/ContactPage.jsx";
 import AuthorizationPage from "./pages/Authorization/AuthorizationPage.jsx";
 import DashboardPage from "./pages/Dashboard/DashboardPage.jsx";
 import SingleProductPage from "./pages/SingleProduct/SingleProductPage.jsx";
+import OrderPage from "./pages/Order/OrderPage.jsx";
 
 //* Admin's components
 import StatisticsComponent from "./AdminComponents/Statistics/StatisticsComponent.jsx";
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/product/:productId",
         element: <SingleProductPage />,
+      },
+      {
+        path: "/order",
+        element: <OrderPage />,
       },
     ],
   },
