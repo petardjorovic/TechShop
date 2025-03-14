@@ -1,35 +1,62 @@
-import { FaShoppingCart } from "react-icons/fa";
-import { IoTrashOutline } from "react-icons/io5";
-
-import "./CartComponent.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useConvertPrice from "../../utils/useConvertPrice";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "./CartComponent.scss";
+import { FaShoppingCart } from "react-icons/fa";
+import { IoTrashOutline } from "react-icons/io5";
+import {
+  changeCounter,
+  removeItem,
+  resetNewOldMessage,
+} from "../../store/cart/cartSlice";
+import { toast } from "react-toastify";
 
 function CartComponent() {
-  const { cart } = useSelector((state) => state.cartStore);
+  const { cart, isNewItem, isOldItem } = useSelector(
+    (state) => state.cartStore
+  );
   const convertPrice = useConvertPrice();
   const [showDropdown, setShowDropdown] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    isNewItem && toast.success("You've added new item to cart");
+    isOldItem && toast.warning("You've increased item count in cart");
+    dispatch(resetNewOldMessage());
+  }, [cart]);
   const displayAllItems = () => {
     return (
       <div className="cart-dropdown">
-        {cart.map((item, i) => {
+        {cart.map((item, index) => {
           return (
-            <div className="dropdown-row" key={i}>
+            <div className="dropdown-row" key={index}>
               <img
                 src={`http://localhost:4000/uploads/${item.image}`}
                 alt={item.title}
               />
               <span className="title">{item.title}</span>
               <div className="counter-box">
-                <span className="plus">+</span>
-                <span className="counter">1</span>
-                <span className="minus">-</span>
+                <span
+                  className="plus"
+                  onClick={() => dispatch(changeCounter({ index, act: 1 }))}
+                >
+                  +
+                </span>
+                <span className="counter">{item.count}</span>
+                <span
+                  className="minus"
+                  onClick={() => dispatch(changeCounter({ index, act: -1 }))}
+                >
+                  -
+                </span>
               </div>
-              <span className="price">{convertPrice(item.price)}</span>
+              <span className="price">{convertPrice(item.totalAmount)}</span>
               <span>
-                <IoTrashOutline size={16} />
+                <IoTrashOutline
+                  size={16}
+                  onClick={() => dispatch(removeItem(index))}
+                />
               </span>
             </div>
           );

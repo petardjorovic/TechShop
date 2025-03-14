@@ -36,6 +36,8 @@
       list-style: none;
       align-items: center;
       gap: 10px;
+      border-bottom: 1px solid gray;
+      padding-bottom: 5px;
 
       img {
         width: 40px;
@@ -44,10 +46,14 @@
       }
 
       .title {
-        width: 120px;
+        font-size: 0.8rem;
+        width: 110px;
+        max-width: 110px;
       }
 
       .counter-box {
+        font-size: 0.6rem;
+
         .plus {
           background-color: gray;
           padding: 2px 5px;
@@ -55,12 +61,15 @@
           border-right: none;
           border-top-left-radius: 2px;
           border-bottom-left-radius: 2px;
+          user-select: none;
+          cursor: pointer;
         }
 
         .counter {
           background-color: gray;
           padding: 2px 8px;
           border: 1px solid rgb(0, 0, 42);
+          user-select: none;
         }
 
         .minus {
@@ -70,11 +79,15 @@
           border-left: none;
           border-top-right-radius: 2px;
           border-bottom-right-radius: 2px;
+          user-select: none;
+          cursor: pointer;
         }
       }
 
       .price {
-        width: 50px;
+        width: 80px;
+        font-size: 0.8rem;
+        margin-right: 8px;
       }
     }
   }
