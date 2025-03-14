@@ -22,11 +22,11 @@ function OrderProcessStepOne() {
           <th scope="col">Delete</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className="align-middle">
         {cart.length ? (
           cart.map((item, index) => {
             return (
-              <tr key={index}>
+              <tr key={index} className="">
                 <th scope="row">{index + 1}</th>
                 <td>
                   <img
@@ -61,7 +61,7 @@ function OrderProcessStepOne() {
                   </div>
                 </td>
                 <td>{convertPrice(item.totalAmount)}</td>
-                <td>
+                <td className="trash">
                   <IoTrashOutline
                     size={21}
                     onClick={() => dispatch(removeItem(index))}

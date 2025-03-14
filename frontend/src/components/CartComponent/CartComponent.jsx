@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import "./CartComponent.scss";
 import { FaShoppingCart } from "react-icons/fa";
 import { IoTrashOutline } from "react-icons/io5";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+
 import {
   changeCounter,
   removeItem,
@@ -17,56 +19,68 @@ function CartComponent() {
     (state) => state.cartStore
   );
   const convertPrice = useConvertPrice();
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(true);
   const dispatch = useDispatch();
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     isNewItem && toast.success("You've added new item to cart");
     isOldItem && toast.warning("You've increased item count in cart");
     dispatch(resetNewOldMessage());
+    setTotalAmount(cart.reduce((total, item) => total + item.totalAmount, 0));
   }, [cart]);
+
   const displayAllItems = () => {
     return (
-      <div className="cart-dropdown">
-        {cart.map((item, index) => {
-          return (
-            <div className="dropdown-row" key={index}>
-              <img
-                src={`http://localhost:4000/uploads/${item.image}`}
-                alt={item.title}
-              />
-              <span className="title">{item.title}</span>
-              <div className="counter-box">
-                <span
-                  className="plus"
-                  onClick={() => dispatch(changeCounter({ index, act: 1 }))}
-                >
-                  +
-                </span>
-                <span className="counter">{item.count}</span>
-                <span
-                  className="minus"
-                  onClick={() => dispatch(changeCounter({ index, act: -1 }))}
-                >
-                  -
-                </span>
-              </div>
-              <span className="price">{convertPrice(item.totalAmount)}</span>
-              <span>
-                <IoTrashOutline
-                  size={16}
-                  onClick={() => dispatch(removeItem(index))}
-                />
+      <div className="cart-dropdown-container">
+        <div className="shopping-cart">
+          <div className="shopping-cart-header">
+            <div className="shopping-cart-badge">
+              <FaShoppingCart size={30} />
+              <span className="badge-count">{cart.length}</span>
+            </div>
+            <div className="shopping-cart-total">
+              <span className="lighter-text">Total: </span>
+              <span className="main-color-text">
+                {convertPrice(totalAmount)}
               </span>
             </div>
-          );
-        })}
-        <Link to={"/order"} className="btn btn-sm btn-info mt-2">
-          Go to Checkout
-        </Link>
+          </div>
+          <div className="shopping-cart-items">
+            {cart.map((item, index) => {
+              return (
+                <div key={index} className="clearfix">
+                  <img
+                    src={`http://localhost:4000/uploads/${item.image}`}
+                    alt={item.title}
+                  />
+                  <div className="item-content">
+                    <p className="item-name">{item.title}</p>
+                    <div className="price-quantity">
+                      <span className="item-price">
+                        {convertPrice(item.price)}
+                      </span>
+                      <span className="item-quantity">Qty: {item.count}</span>
+                    </div>
+                  </div>
+
+                  <IoIosCloseCircleOutline
+                    size={18}
+                    className="trash"
+                    onClick={() => dispatch(removeItem(index))}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <Link to={"/order"} className="checkout-btn">
+            Checkout
+          </Link>
+        </div>
       </div>
     );
   };
+
   return (
     <div
       className="cart-wrapper"
@@ -76,7 +90,7 @@ function CartComponent() {
       <Link to={"/order"}>
         <FaShoppingCart size={25} />
       </Link>
-      {cart.length > 0 && <div className="cart-count">{cart.length}</div>}
+      {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
       {showDropdown && cart.length > 0 ? displayAllItems() : null}
     </div>
   );
