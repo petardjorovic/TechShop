@@ -1,0 +1,17 @@
+.buttons-wrapper {
+  width: 100%;
+  display: flex;
+  padding: 30px 0;
+
+  .btn-next {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .btn-back {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+}

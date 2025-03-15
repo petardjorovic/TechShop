@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import useConvertPrice from "../../utils/useConvertPrice";
 import { changeCounter, removeItem } from "../../store/cart/cartSlice";
@@ -9,8 +9,13 @@ function OrderProcessStepOne() {
   const { cart } = useSelector((state) => state.cartStore);
   const convertPrice = useConvertPrice();
   const dispatch = useDispatch();
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    setTotal(cart.reduce((total, item) => total + item.totalAmount, 0));
+  }, [cart]);
   return (
-    <table className="table table-hover">
+    <table className="table table-hover mt-4">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -44,19 +49,19 @@ function OrderProcessStepOne() {
                 <td>
                   <div className="counter-box">
                     <span
-                      className="plus"
-                      onClick={() => dispatch(changeCounter({ index, act: 1 }))}
-                    >
-                      +
-                    </span>
-                    <span className="counter">{item.count}</span>
-                    <span
                       className="minus"
                       onClick={() =>
                         dispatch(changeCounter({ index, act: -1 }))
                       }
                     >
                       -
+                    </span>
+                    <span className="counter">{item.count}</span>
+                    <span
+                      className="plus"
+                      onClick={() => dispatch(changeCounter({ index, act: 1 }))}
+                    >
+                      +
                     </span>
                   </div>
                 </td>
@@ -73,6 +78,16 @@ function OrderProcessStepOne() {
         ) : (
           <tr>
             <td>The Cart is empty</td>
+          </tr>
+        )}
+        {cart.length > 0 && (
+          <tr className="table-info">
+            <td colSpan="5">
+              <strong>TOTAL</strong>
+            </td>
+            <td colSpan="2">
+              <strong>{convertPrice(total)}</strong>
+            </td>
           </tr>
         )}
       </tbody>

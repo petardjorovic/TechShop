@@ -19,7 +19,7 @@ function CartComponent() {
     (state) => state.cartStore
   );
   const convertPrice = useConvertPrice();
-  const [showDropdown, setShowDropdown] = useState(true);
+  const [showDropdown, setShowDropdown] = useState(false);
   const dispatch = useDispatch();
   const [totalAmount, setTotalAmount] = useState(0);
 

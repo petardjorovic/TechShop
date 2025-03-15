@@ -1,28 +1,10 @@
 @import "../../assets/sass/main.scss";
 
 .counter-box {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 
   .plus {
-    background-color: gray;
-    padding: 2px 5px;
-    border: 1px solid rgb(0, 0, 42);
-    border-right: none;
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-    user-select: none;
-    cursor: pointer;
-  }
-
-  .counter {
-    background-color: gray;
-    padding: 2px 8px;
-    border: 1px solid rgb(0, 0, 42);
-    user-select: none;
-  }
-
-  .minus {
-    background-color: gray;
+    background-color: rgb(185, 185, 185);
     padding: 2px 5px;
     border: 1px solid rgb(0, 0, 42);
     border-left: none;
@@ -30,6 +12,33 @@
     border-bottom-right-radius: 2px;
     user-select: none;
     cursor: pointer;
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+  }
+
+  .counter {
+    background-color: rgb(185, 185, 185);
+    padding: 2px 8px;
+    border: 1px solid rgb(0, 0, 42);
+    user-select: none;
+    display: inline-block;
+    text-align: center;
+    width: 30px;
+  }
+
+  .minus {
+    background-color: rgb(185, 185, 185);
+    padding: 2px 5px;
+    border: 1px solid rgb(0, 0, 42);
+    border-right: none;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    user-select: none;
+    cursor: pointer;
+    display: inline-block;
+    width: 20px;
+    text-align: center;
   }
 }
 
