@@ -7,7 +7,7 @@ const orderSlice = createSlice({
   },
   reducers: {
     nextStep: (state) => {
-      if (state.currentStep < 3) state.currentStep = state.currentStep + 1;
+      if (state.currentStep < 2) state.currentStep = state.currentStep + 1; // bilo je manje od 3
     },
     backStep: (state, action) => {
       if (state.currentStep > 1) state.currentStep = state.currentStep - 1;

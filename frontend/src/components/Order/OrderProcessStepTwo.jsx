@@ -1,82 +1,50 @@
-import React, { useState } from "react";
-import LabelComponent from "../Label/LabelComponent";
-import InputComponent from "../Input/InputComponent";
-import "./OrderProcessStepTwo.scss";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Elements } from "@stripe/react-stripe-js";
+import stripePromise from "../../config/stripeConfig";
+import { showLoader } from "../../store/loader/loaderSlice";
+import { makePayment } from "../../services/paymentService";
+import CheckoutForm from "./CheckoutForm";
+import AddressForm from "./AddressForm";
 
-function OrderProcessStepTwo() {
-  const [customerData, setCustomerData] = useState({
-    fullName: "",
-    email: "",
-    address: "",
-    phone: "",
-    city: "",
-    postalCode: "",
-    county: "",
-  });
+function OrderProcessStepThree() {
+  const [secretKey, setSecretKey] = useState("");
+  const { cart } = useSelector((state) => state.cartStore);
+  const { currency } = useSelector((state) => state.currencyStore);
+  const dispatch = useDispatch();
+
+  const options = {
+    // passing the client secret obtained from the server
+    clientSecret: secretKey,
+  };
+
+  useEffect(() => {
+    let total = cart.reduce((total, item) => total + item.totalAmount, 0);
+    if (currency === "USD") total = total * 1.09;
+    if (currency === "RSD") total = total * 117;
+    if (currency === "EUR") total = total;
+
+    const fetchPayment = async () => {
+      dispatch(showLoader(true));
+      const res = await makePayment({ amount: total, currency });
+      dispatch(showLoader(false));
+      console.log(res);
+
+      if (res.status === "success") setSecretKey(res.clientSecret);
+    };
+    fetchPayment();
+  }, []);
+
   return (
-    <div className="address-form-wrapper">
-      <div className="content"></div>
-      <form className="address-form">
-        <div className="input-wrapper">
-          <LabelComponent htmlFor={"fullName"}>Full Name</LabelComponent>
-          <InputComponent
-            type={"text"}
-            id={"fullName"}
-            placeholder={"Enter first and last name"}
-          />
-        </div>
-        <div className="input-wrapper">
-          <LabelComponent htmlFor={"email"}>Email</LabelComponent>
-          <InputComponent
-            type={"text"}
-            id={"email"}
-            placeholder={"Enter email address"}
-          />
-        </div>
-        <div className="input-wrapper">
-          <LabelComponent htmlFor={"address"}>Address</LabelComponent>
-          <InputComponent
-            type={"text"}
-            id={"address"}
-            placeholder={"Enter address"}
-          />
-        </div>
-        <div className="input-wrapper">
-          <LabelComponent htmlFor={"phone"}>Phone</LabelComponent>
-          <InputComponent
-            type={"text"}
-            id={"phone"}
-            placeholder={"Enter phone number"}
-          />
-        </div>
-        <div className="input-wrapper">
-          <LabelComponent htmlFor={"city"}>City</LabelComponent>
-          <InputComponent
-            type={"text"}
-            id={"city"}
-            placeholder={"Enter city"}
-          />
-        </div>
-        <div className="input-wrapper">
-          <LabelComponent htmlFor={"postalCode"}>Postal Code</LabelComponent>
-          <InputComponent
-            type={"text"}
-            id={"postalCode"}
-            placeholder={"Enter postal code"}
-          />
-        </div>
-        <div className="input-wrapper">
-          <LabelComponent htmlFor={"country"}>Country</LabelComponent>
-          <InputComponent
-            type={"text"}
-            id={"country"}
-            placeholder={"Enter country"}
-          />
-        </div>
-        <button className="btn btn-info">Save</button>
-      </form>
-    </div>
+    <>
+      {secretKey && (
+        <Elements stripe={stripePromise} options={options}>
+          <AddressForm />
+          <CheckoutForm />
+        </Elements>
+      )}
+    </>
   );
 }
 
-export default OrderProcessStepTwo;
+export default OrderProcessStepThree;
