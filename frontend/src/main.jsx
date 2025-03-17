@@ -19,6 +19,7 @@ import StatisticsComponent from "./AdminComponents/Statistics/StatisticsComponen
 import AddProductComponent from "./AdminComponents/AddProduct/AddProductComponent.jsx";
 import UsersComponent from "./AdminComponents/Users/UsersComponent.jsx";
 import CommentsComponent from "./AdminComponents/Comments/CommentsComponent.jsx";
+import ProductsComponent from "./AdminComponents/Products/ProductsComponent.jsx";
 
 //* protection
 import AdminProtect from "./AdminComponents/AdminProtect/AdminProtect.jsx";
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "add-product",
         element: <AddProductComponent />,
+      },
+      {
+        path: "products",
+        element: <ProductsComponent />,
       },
       {
         path: "users",

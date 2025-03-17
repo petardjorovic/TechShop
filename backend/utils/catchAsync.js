@@ -19,10 +19,8 @@ module.exports = (func) => {
                     return next(new AppError(err.message), 404);
                 case 'StripeInvalidRequestError':
                     console.log('An invalid request occurred.');
-                    return next(new AppError('An invalid request occurred.'), 404);
                 default:
                     console.log('Another problem occurred, maybe unrelated to Stripe.');
-                    return next(new AppError('Another problem occurred, maybe unrelated to Stripe.'), 404);
             }
 
             return next(new AppError('An error on server side', 500));

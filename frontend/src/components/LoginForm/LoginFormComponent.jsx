@@ -47,6 +47,7 @@ function LoginFormComponent() {
     dispatch(showLoader(false));
     if (res.status === "success") {
       localStorage.setItem(localStorageConfig.USER, JSON.stringify(res.user));
+      localStorage.setItem(localStorageConfig.TOKEN, res.token);
       dispatch(setUser(res.user));
       navigate("/");
     } else {

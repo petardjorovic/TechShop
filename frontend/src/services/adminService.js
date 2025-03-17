@@ -25,3 +25,23 @@ export const addProduct = async (product) => {
     };
   }
 };
+
+export const deleteProduct = async ({ productId, productImage }) => {
+  try {
+    const res = await axios.delete(
+      `/api/v1/admin/product/${productId}/${productImage}`
+    );
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+  } catch (err) {
+    console.log(err, "err iz servisa delete");
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
+  }
+};

@@ -2,6 +2,7 @@ const UserModel = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const Email = require('../utils/Email');
+const signToken = require('../utils/signToken');
 
 //* ==============================
 //* ========== REGISTER ==========
@@ -34,10 +35,13 @@ const login = catchAsync(async (req, res, next) => {
     if (!correctPassword) return next(new AppError('Wrong credentials', 401));
 
     const { password, __v, _id, createdAt, updatedAt, ...dataUser } = user.toObject();
+
+    const token = signToken(user._id);
+
     return res.status(200).json({
         status: 'success',
-        message: 'User successufully logged',
         user: dataUser,
+        token,
     });
 });
 

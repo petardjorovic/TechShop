@@ -27,8 +27,8 @@ export const login = async (user) => {
     if (res.status === 200 && res.data.status === "success") {
       return {
         status: res.data.status,
-        message: res.data.message,
         user: res.data.user,
+        token: res.data.token,
       };
     }
     return {

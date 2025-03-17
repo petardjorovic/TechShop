@@ -1,6 +1,6 @@
 export const adminSidebarConfig = [
   {
-    name: "Dashboard",
+    name: "Statistics",
     icon: "ion-clipboard",
     url: "",
   },
@@ -8,6 +8,11 @@ export const adminSidebarConfig = [
     name: "Add Product",
     icon: "ion-plus-circled",
     url: "add-product",
+  },
+  {
+    name: "Products",
+    icon: "ion-cube",
+    url: "products",
   },
   {
     name: "Users",

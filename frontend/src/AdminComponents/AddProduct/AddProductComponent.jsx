@@ -35,7 +35,6 @@ function AddProductComponent() {
     dispatch(showLoader(true));
     const res = await addProduct(newProduct);
     dispatch(showLoader(false));
-    console.log(res, "res sa fronta");
     if (res.status === "success") {
       toast.success(res.message);
       formRef.current.reset();
@@ -53,7 +52,7 @@ function AddProductComponent() {
   return (
     <div className="add-product-wrapper">
       <div className="content">
-        <h1>AddProduct</h1>
+        <h1>Add Product</h1>
       </div>
       <form className="add-product-form" ref={formRef} onSubmit={handleSubmit}>
         <div className="input-wrapper">
