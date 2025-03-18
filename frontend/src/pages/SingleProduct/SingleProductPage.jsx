@@ -6,10 +6,12 @@ import { getSingleProduct } from "../../services/productServices";
 import "./SingleProductPage.scss";
 import useConvertPrice from "../../utils/useConvertPrice";
 import { addToCart } from "../../store/cart/cartSlice";
+import LeaveCommentComponent from "../../components/LeaveComment/LeaveCommentComponent";
 
 function SingleProductPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
+  const [isComment, setIsComment] = useState(false);
   const dispatch = useDispatch();
   const convertPrice = useConvertPrice();
 
@@ -46,6 +48,9 @@ function SingleProductPage() {
             </div>
           </div>
         </div>
+      )}
+      {product.hasOwnProperty("_id") && (
+        <LeaveCommentComponent product={product} />
       )}
     </div>
   );

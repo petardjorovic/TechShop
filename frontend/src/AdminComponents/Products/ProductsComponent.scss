@@ -85,21 +85,21 @@
       }
     }
   }
-}
 
-.btns-wrapper {
-  display: flex;
-  justify-content: space-between;
-}
+  .btns-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
 
-::-webkit-scrollbar {
-  width: 12px;
-}
+  ::-webkit-scrollbar {
+    width: 13px;
+  }
 
-::-webkit-scrollbar-thumb {
-  background-color: #323539;
-}
+  ::-webkit-scrollbar-thumb {
+    background-color: #323539;
+  }
 
-::-webkit-scrollbar-thumb:window-inactive {
-  background-color: #323539;
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background-color: #323539;
+  }
 }
