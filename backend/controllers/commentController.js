@@ -26,4 +26,28 @@ const getProductComments = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = { addProductComment, getProductComments };
+const getAllComments = catchAsync(async (req, res, next) => {
+    const allComments = await CommentModel.find({});
+    if (!allComments.length) return next(new AppError(`There is not any comment`, 404));
+
+    res.status(200).json({
+        status: 'success',
+        allComments,
+    });
+});
+
+const changeCommentStatus = catchAsync(async (req, res, next) => {
+    const changedComment = await CommentModel.findByIdAndUpdate(
+        req.body.commentId,
+        { status: req.body.status },
+        { new: true, runValidators: true }
+    );
+    if (!changedComment) return next(new AppError('There is not such comment', 404));
+
+    res.status(200).json({
+        status: 'success',
+        message: 'You have successufully changed comment',
+    });
+});
+
+module.exports = { addProductComment, getProductComments, getAllComments, changeCommentStatus };

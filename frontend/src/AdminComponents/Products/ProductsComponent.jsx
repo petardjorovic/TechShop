@@ -4,12 +4,14 @@ import { useDispatch } from "react-redux";
 import { showLoader } from "../../store/loader/loaderSlice";
 import "./ProductsComponent.scss";
 import DeleteProductModal from "./Modals/DeleteProductModal";
+import EditProductModal from "./Modals/EditProductModal";
 
 function ProductsComponent() {
   const [products, setProducts] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState({});
   const dispatch = useDispatch();
+  const [isEditModal, setIsEditModal] = useState(false);
 
   const fetchProducts = async () => {
     dispatch(showLoader(true));
@@ -37,7 +39,12 @@ function ProductsComponent() {
           <td>{product.price}</td>
           <td>
             <div className="btns-wrapper">
-              <button className="btn btn-warning">Edit</button>
+              <button
+                className="btn btn-warning"
+                onClick={() => openEditProductModal(product)}
+              >
+                Edit
+              </button>
               <button
                 className="btn btn-danger"
                 onClick={() => openDeleteProductModal(product)}
@@ -56,6 +63,11 @@ function ProductsComponent() {
     setCurrentProduct(product);
   };
 
+  const openEditProductModal = (product) => {
+    setIsEditModal(true);
+    setCurrentProduct(product);
+  };
+
   return (
     <div className="table-products">
       <table className="table table-bordered table-hover table-dark table-striped">
@@ -70,6 +82,14 @@ function ProductsComponent() {
         </thead>
         <tbody>{products.length > 0 && displayAllProducts()}</tbody>
       </table>
+      {isEditModal && (
+        <EditProductModal
+          setIsEditModal={setIsEditModal}
+          currentProduct={currentProduct}
+          rerenderView={fetchProducts}
+        />
+      )}
+
       {modalIsOpen && (
         <DeleteProductModal
           setIsOpen={setIsOpen}

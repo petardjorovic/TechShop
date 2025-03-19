@@ -38,7 +38,23 @@ export const deleteProduct = async ({ productId, productImage }) => {
       };
     }
   } catch (err) {
-    console.log(err, "err iz servisa delete");
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
+  }
+};
+
+export const editSingleProduct = async (product) => {
+  try {
+    const res = await axios.put("/api/v1/admin/product", product);
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+  } catch (err) {
     return {
       status: err.response.data.err.status,
       message: err.response.data.message,

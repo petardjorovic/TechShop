@@ -30,7 +30,7 @@ function DeleteProductModal({ setIsOpen, currentProduct, rerenderView }) {
           <span className="text-danger">{currentProduct.title}</span>?
         </h3>
       </div>
-      <div className="btns-wrapper mt-4">
+      <div className="btns-wrapper mt-4 d-flex justify-content-between">
         <button
           type="button"
           className="btn btn-primary"
