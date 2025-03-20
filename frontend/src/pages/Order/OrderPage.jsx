@@ -13,7 +13,7 @@ function OrderPage() {
   const [paymentMessage, setPaymentMessage] = useState("");
 
   useEffect(() => {
-    console.log(searchParams);
+    // console.log(searchParams);
     if (searchParams.get("redirect_status")) {
       setPaymentMessage(searchParams.get("redirect_status"));
     }

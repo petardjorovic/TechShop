@@ -28,7 +28,7 @@ function OrderProcessStepThree() {
       dispatch(showLoader(true));
       const res = await makePayment({ amount: total, currency });
       dispatch(showLoader(false));
-      console.log(res);
+      // console.log(res);
 
       if (res.status === "success") setSecretKey(res.clientSecret);
     };

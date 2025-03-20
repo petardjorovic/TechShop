@@ -20,7 +20,7 @@ const addProduct = catchAsync(async (req, res, next) => {
 const deleteSingleProduct = catchAsync(async (req, res, next) => {
     const { productId, productImg } = req.params;
     const deletedProduct = await ProductModel.deleteOne({ _id: productId });
-    console.log(deletedProduct, 'deletedProduct');
+    // console.log(deletedProduct, 'deletedProduct');
     if (deletedProduct.acknowledged && deletedProduct.deletedCount === 1) {
         const imgPath = path.join(__dirname, '..', 'uploads', productImg);
 

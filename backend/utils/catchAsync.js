@@ -15,12 +15,12 @@ module.exports = (func) => {
             //* Stripe validation
             switch (err?.type) {
                 case 'StripeCardError':
-                    console.log(`A payment error occurred: ${err.message}`);
+                    console.error(`A payment error occurred: ${err.message}`);
                     return next(new AppError(err.message), 404);
                 case 'StripeInvalidRequestError':
-                    console.log('An invalid request occurred.');
+                    console.error('An invalid request occurred.');
                 default:
-                    console.log('Another problem occurred, maybe unrelated to Stripe.');
+                    console.error('Another problem occurred, maybe unrelated to Stripe.');
             }
 
             return next(new AppError('An error on server side', 500));

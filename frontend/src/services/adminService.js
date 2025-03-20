@@ -18,7 +18,7 @@ export const addProduct = async (product) => {
       message: res.data.message,
     };
   } catch (error) {
-    console.log(error, "err iz servisa");
+    console.error(error, "err iz servisa");
     return {
       status: error.response.data.err.status,
       message: error.response.data.message,
