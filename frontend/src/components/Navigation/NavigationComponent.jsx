@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import "./navigation.scss";
+import "./Navigation.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrency } from "../../store/currency/currencySlice";
 import { toggleLoginForm } from "../../store/loginRegister/loginRegisterSlice";
