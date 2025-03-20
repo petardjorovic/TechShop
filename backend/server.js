@@ -24,7 +24,7 @@ app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //* routes
-app.use(require('./routes'));
+app.use('/', require('./routes'));
 
 //* Error 404
 app.all('*', (req, res, next) => {
