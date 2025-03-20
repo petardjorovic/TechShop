@@ -1,10 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
 const AppError = require('./utils/AppError');
 const errorController = require('./controllers/errorController');
 const path = require('path');
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 mongoose
     .connect(process.env.MONGODB_URI)

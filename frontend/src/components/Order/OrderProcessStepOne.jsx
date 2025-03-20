@@ -35,7 +35,7 @@ function OrderProcessStepOne() {
                 <th scope="row">{index + 1}</th>
                 <td>
                   <img
-                    src={`http://localhost:4000/uploads/${item.image}`}
+                    src={`https://backendpetarshop.onrender.com/uploads/${item.image}`}
                     alt={item.title}
                     style={{
                       width: "70px",

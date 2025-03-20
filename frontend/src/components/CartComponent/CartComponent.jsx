@@ -51,7 +51,7 @@ function CartComponent() {
               return (
                 <div key={index} className="clearfix">
                   <img
-                    src={`http://localhost:4000/uploads/${item.image}`}
+                    src={`https://backendpetarshop.onrender.com/uploads/${item.image}`}
                     alt={item.title}
                   />
                   <div className="item-content">

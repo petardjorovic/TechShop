@@ -18,7 +18,7 @@ const addProductComment = catchAsync(async (req, res, next) => {
 
 const getProductComments = catchAsync(async (req, res, next) => {
     const allComments = await CommentModel.find({ productId: req.params.productId }); // mogli smo i da chainujemo status: true
-    if (!allComments.length) return next(new AppError('There is not any comment for this product', 404));
+    if (!allComments) return next(new AppError('There is not such product and its comments', 404));
 
     return res.status(200).json({
         status: 'success',

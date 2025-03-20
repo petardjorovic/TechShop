@@ -27,6 +27,8 @@ export const getProductComments = async (productId) => {
       };
     }
   } catch (err) {
+    console.error(err);
+
     return {
       status: err.response.data.err.status,
       message: err.response.data.message,

@@ -31,7 +31,7 @@ function ProductsComponent() {
           <td>{index + 1}</td>
           <td>
             <img
-              src={`http://localhost:4000/uploads/${product.image}`}
+              src={`https://backendpetarshop.onrender.com/uploads/${product.image}`}
               alt={product.title}
             />
           </td>

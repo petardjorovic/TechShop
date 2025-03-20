@@ -33,7 +33,7 @@ function SingleProductPage() {
         <div className="product-wrapper">
           <div className="product-left">
             <img
-              src={`http://localhost:4000/uploads/${product.image}`}
+              src={`https://backendpetarshop.onrender.com/uploads/${product.image}`}
               alt={product.title}
             />
           </div>

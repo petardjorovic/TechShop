@@ -8,7 +8,7 @@ function ProductCardComponent({ product }) {
   return (
     <div className="product-card-wrapper">
       <img
-        src={`http://localhost:4000/uploads/${product.image}`}
+        src={`https://backendpetarshop.onrender.com/uploads/${product.image}`}
         alt={product.title}
         className="product-img"
       />

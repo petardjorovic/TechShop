@@ -83,11 +83,11 @@ function LeaveCommentComponent({ product }) {
         {allComments.length > 0 &&
           allComments.map((comment, index) => {
             return (
-              <div class="card my-1">
-                <div class="card-body">
-                  <h5 class="card-title">{comment.author}</h5>
-                  <p class="card-text">{comment.content}</p>
-                  <footer class="blockquote-footer">
+              <div className="card my-1" key={index}>
+                <div className="card-body">
+                  <h5 className="card-title">{comment.author}</h5>
+                  <p className="card-text">{comment.content}</p>
+                  <footer className="blockquote-footer">
                     Date:{" "}
                     <cite title="Source Title">{formatDate(comment.date)}</cite>
                   </footer>

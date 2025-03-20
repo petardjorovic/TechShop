@@ -1,6 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
+import { disableReactDevTools } from "@fvilers/disable-react-devtools";
+
+if (import.meta.env.MODE === "production") {
+  disableReactDevTools();
+}
 
 //*redux
 import { Provider } from "react-redux";
