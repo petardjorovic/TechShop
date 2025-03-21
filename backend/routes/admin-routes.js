@@ -11,4 +11,6 @@ router
     .delete(authorizationValidation.protect, adminController.deleteSingleProduct)
     .put(authorizationValidation.protect, upload.single('file'), adminController.editSingleProduct);
 
+router.route('/user').get(adminController.getAllUsers);
+
 module.exports = router;

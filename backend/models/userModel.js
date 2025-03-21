@@ -53,6 +53,10 @@ const userSchema = new Schema(
         votedFor: {
             type: Array,
         },
+        status: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamps: true,

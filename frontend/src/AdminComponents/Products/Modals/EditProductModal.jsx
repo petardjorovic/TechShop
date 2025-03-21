@@ -20,11 +20,20 @@ function EditProductModal({ setIsEditModal, currentProduct, rerenderView }) {
     image: currentProduct?.image,
   });
   const [file, setFile] = useState(null);
+  const [isTitleEmpty, setIsTitleEmpty] = useState(false);
+  const [isDescriptionEmpty, setIsDescriptionEmpty] = useState(false);
+  const [isPriceEmpty, setIsPriceEmpty] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // TODO: validacija inputa
+    // * inputs validation
+    !product.title ? setIsTitleEmpty(true) : setIsTitleEmpty(false);
+    !product.description
+      ? setIsDescriptionEmpty(true)
+      : setIsDescriptionEmpty(false);
+    !product.price ? setIsPriceEmpty(true) : setIsPriceEmpty(false);
+    if (!product.title || !product.description || !product.price) return;
 
     let formDataProduct;
     if (file) {
@@ -68,7 +77,9 @@ function EditProductModal({ setIsEditModal, currentProduct, rerenderView }) {
         <h3 className="text-center">Edit product: {currentProduct.title}</h3>
         <form className="edit-product-form py-1 px-5" onSubmit={handleSubmit}>
           <div className="input-wrapper">
-            <LabelComponent htmlFor={"title"}>Title</LabelComponent>
+            <LabelComponent htmlFor={"title"} color={isTitleEmpty}>
+              {isTitleEmpty ? "Title is required" : "Title"}
+            </LabelComponent>
             <InputComponent
               type={"text"}
               id={"title"}
@@ -77,7 +88,9 @@ function EditProductModal({ setIsEditModal, currentProduct, rerenderView }) {
             />
           </div>
           <div className="input-wrapper">
-            <LabelComponent htmlFor={"description"}>Description</LabelComponent>
+            <LabelComponent htmlFor={"description"} color={isDescriptionEmpty}>
+              {isDescriptionEmpty ? "Description is required" : "Description"}
+            </LabelComponent>
             <InputComponent
               type={"text"}
               id={"description"}
@@ -86,7 +99,9 @@ function EditProductModal({ setIsEditModal, currentProduct, rerenderView }) {
             />
           </div>
           <div className="input-wrapper">
-            <LabelComponent htmlFor={"price"}>Price</LabelComponent>
+            <LabelComponent htmlFor={"price"} color={isPriceEmpty}>
+              {isPriceEmpty ? "Price is required" : "Price"}
+            </LabelComponent>
             <InputComponent
               type={"number"}
               id={"price"}

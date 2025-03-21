@@ -31,10 +31,6 @@ function ProductsComponent() {
         <tr key={index} className="align-middle">
           <td>{index + 1}</td>
           <td>
-            {console.log(
-              `${urlConfig.backend}/uploads/${product.image}`,
-              "ovo je link za sliku"
-            )}
             <img
               src={`${urlConfig.backend}/uploads/${product.image}`}
               alt={product.title}

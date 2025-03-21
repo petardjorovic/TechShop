@@ -1,4 +1,5 @@
 const ProductModel = require('../models/productModel');
+const UserModel = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const fs = require('fs');
@@ -61,4 +62,14 @@ const editSingleProduct = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = { addProduct, deleteSingleProduct, editSingleProduct };
+const getAllUsers = catchAsync(async (req, res, next) => {
+    const allUsers = await UserModel.find({});
+    if (!allUsers) return next(new AppError('An error occurred, please try later', 404));
+
+    res.status(200).json({
+        status: 'success',
+        allUsers,
+    });
+});
+
+module.exports = { addProduct, deleteSingleProduct, editSingleProduct, getAllUsers };

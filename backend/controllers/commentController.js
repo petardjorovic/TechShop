@@ -50,4 +50,16 @@ const changeCommentStatus = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = { addProductComment, getProductComments, getAllComments, changeCommentStatus };
+const deleteComment = catchAsync(async (req, res, next) => {
+    const deletedComment = await CommentModel.deleteOne({ _id: req.params.commentId });
+    if (deletedComment.acknowledged && deletedComment.deletedCount === 1) {
+        return res.status(200).json({
+            status: 'success',
+            message: 'Comment succesufully deleted',
+        });
+    } else {
+        return next(new AppError('There is not such comment', 404));
+    }
+});
+
+module.exports = { addProductComment, getProductComments, getAllComments, changeCommentStatus, deleteComment };

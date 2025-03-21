@@ -1,0 +1,105 @@
+.table-users {
+  height: 100vh;
+
+  table {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+    background-color: #212529;
+
+    & thead {
+      display: table;
+      flex: 0 0 auto;
+      width: calc(100% - 13px);
+
+      & tr {
+        & th:nth-child(1) {
+          width: 5%;
+        }
+
+        & th:nth-child(2) {
+          width: 30%;
+        }
+
+        & th:nth-child(3) {
+          width: 20%;
+        }
+
+        & th:nth-child(4) {
+          width: 12.5%;
+        }
+
+        & th:nth-child(5) {
+          width: 12.5%;
+        }
+
+        & th:nth-child(6) {
+          width: 20%;
+        }
+      }
+    }
+
+    & tbody {
+      flex: 1 1 auto;
+      display: block;
+      overflow-y: scroll;
+
+      & tr {
+        width: 100%;
+        display: table;
+        border-bottom: 0px;
+        border-style: unset;
+
+        & td:nth-child(1) {
+          width: 5%;
+        }
+
+        & td:nth-child(2) {
+          width: 30%;
+        }
+
+        & td:nth-child(3) {
+          width: 20%;
+        }
+
+        & td:nth-child(4) {
+          width: 12.5%;
+        }
+
+        & td:nth-child(5) {
+          width: 12.5%;
+        }
+
+        & td:nth-child(6) {
+          width: 20%;
+        }
+
+        & td {
+          .btns-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+          }
+        }
+      }
+    }
+  }
+
+  .btns-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  ::-webkit-scrollbar {
+    width: 13px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #323539;
+  }
+
+  ::-webkit-scrollbar-thumb:window-inactive {
+    background-color: #323539;
+  }
+}

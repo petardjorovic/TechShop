@@ -8,10 +8,13 @@ import {
 import "./CommentsComponent.scss";
 import { formatDateAdmin } from "../../utils/formatDate";
 import { toast } from "react-toastify";
+import DeleteCommentModal from "./Modals/DeleteCommentModal";
 
 function CommentsComponent() {
   const [comments, setComments] = useState([]);
   const dispatch = useDispatch();
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [currentComment, setCurrentComment] = useState({});
 
   const fetchComments = async () => {
     dispatch(showLoader(true));
@@ -43,6 +46,11 @@ function CommentsComponent() {
     } else {
       toast.error(res.message);
     }
+  };
+
+  const openDeleteCommentModal = async (comment) => {
+    setCurrentComment(comment);
+    setIsDeleteModal(true);
   };
 
   return (
@@ -87,7 +95,12 @@ function CommentsComponent() {
                     )}
                   </td>
                   <td>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => openDeleteCommentModal(comment)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               );
@@ -101,6 +114,13 @@ function CommentsComponent() {
           )}
         </tbody>
       </table>
+      {isDeleteModal && (
+        <DeleteCommentModal
+          currentComment={currentComment}
+          setIsDeleteModal={setIsDeleteModal}
+          rerenderView={fetchComments}
+        />
+      )}
     </div>
   );
 }
