@@ -5,6 +5,7 @@ import { showLoader } from "../../store/loader/loaderSlice";
 import "./ProductsComponent.scss";
 import DeleteProductModal from "./Modals/DeleteProductModal";
 import EditProductModal from "./Modals/EditProductModal";
+import { urlConfig } from "../../config/urlConfig";
 
 function ProductsComponent() {
   const [products, setProducts] = useState([]);
@@ -30,8 +31,12 @@ function ProductsComponent() {
         <tr key={index} className="align-middle">
           <td>{index + 1}</td>
           <td>
+            {console.log(
+              `${urlConfig.backend}/uploads/${product.image}`,
+              "ovo je link za sliku"
+            )}
             <img
-              src={`https://backendpetarshop.onrender.com/uploads/${product.image}`}
+              src={`${urlConfig.backend}/uploads/${product.image}`}
               alt={product.title}
             />
           </td>

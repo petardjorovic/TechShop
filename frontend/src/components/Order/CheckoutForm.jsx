@@ -8,6 +8,7 @@ import OrderButtons from "./OrderButtons";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { showLoader } from "../../store/loader/loaderSlice";
+import { urlConfig } from "../../config/urlConfig";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
@@ -23,7 +24,7 @@ const CheckoutForm = () => {
       //`Elements` instance that was used to create the Payment Element
       elements,
       confirmParams: {
-        return_url: "https://petarshop.onrender.com/order",
+        return_url: `${urlConfig.frontend}/order`,
       },
     });
     dispatch(showLoader(false));

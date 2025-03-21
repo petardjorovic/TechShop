@@ -4,6 +4,7 @@ import useConvertPrice from "../../utils/useConvertPrice";
 import { changeCounter, removeItem } from "../../store/cart/cartSlice";
 import "./OrderProcessStepOne.scss";
 import { IoTrashOutline } from "react-icons/io5";
+import { urlConfig } from "../../config/urlConfig";
 
 function OrderProcessStepOne() {
   const { cart } = useSelector((state) => state.cartStore);
@@ -35,7 +36,7 @@ function OrderProcessStepOne() {
                 <th scope="row">{index + 1}</th>
                 <td>
                   <img
-                    src={`https://backendpetarshop.onrender.com/uploads/${item.image}`}
+                    src={`${urlConfig.backend}/uploads/${item.image}`}
                     alt={item.title}
                     style={{
                       width: "70px",

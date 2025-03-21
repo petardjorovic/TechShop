@@ -2,13 +2,14 @@ import { useSelector } from "react-redux";
 import "./ProductCardComponent.scss";
 import useConvertPrice from "../../utils/useConvertPrice";
 import { Link } from "react-router-dom";
+import { urlConfig } from "../../config/urlConfig";
 
 function ProductCardComponent({ product }) {
   const convertPrice = useConvertPrice();
   return (
     <div className="product-card-wrapper">
       <img
-        src={`https://backendpetarshop.onrender.com/uploads/${product.image}`}
+        src={`${urlConfig.backend}/uploads/${product.image}`}
         alt={product.title}
         className="product-img"
       />

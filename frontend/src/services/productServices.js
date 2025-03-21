@@ -3,6 +3,8 @@ import axios from "axios";
 export const getAllProducts = async () => {
   try {
     const res = await axios.get("/api/v1/products");
+    // console.log(res, "res iz servisa get all products");
+
     if (res.status === 200 && res.data.status === "success") {
       return {
         status: res.data.status,

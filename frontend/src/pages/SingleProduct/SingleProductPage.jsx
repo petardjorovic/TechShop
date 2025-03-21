@@ -7,6 +7,7 @@ import "./SingleProductPage.scss";
 import useConvertPrice from "../../utils/useConvertPrice";
 import { addToCart } from "../../store/cart/cartSlice";
 import LeaveCommentComponent from "../../components/LeaveComment/LeaveCommentComponent";
+import { urlConfig } from "../../config/urlConfig";
 
 function SingleProductPage() {
   const { productId } = useParams();
@@ -33,7 +34,7 @@ function SingleProductPage() {
         <div className="product-wrapper">
           <div className="product-left">
             <img
-              src={`https://backendpetarshop.onrender.com/uploads/${product.image}`}
+              src={`${urlConfig.backend}/uploads/${product.image}`}
               alt={product.title}
             />
           </div>

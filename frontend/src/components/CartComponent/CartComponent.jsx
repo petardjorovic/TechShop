@@ -13,6 +13,7 @@ import {
   resetNewOldMessage,
 } from "../../store/cart/cartSlice";
 import { toast } from "react-toastify";
+import { urlConfig } from "../../config/urlConfig";
 
 function CartComponent() {
   const { cart, isNewItem, isOldItem } = useSelector(
@@ -51,7 +52,7 @@ function CartComponent() {
               return (
                 <div key={index} className="clearfix">
                   <img
-                    src={`https://backendpetarshop.onrender.com/uploads/${item.image}`}
+                    src={`${urlConfig.backend}/uploads/${item.image}`}
                     alt={item.title}
                   />
                   <div className="item-content">

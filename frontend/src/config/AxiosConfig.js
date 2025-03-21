@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getToken } from "../utils/getToken";
+import { urlConfig } from "./urlConfig";
 
-axios.defaults.baseURL = "https://backendpetarshop.onrender.com";
+axios.defaults.baseURL = urlConfig.backend;
 
 // Add a request interceptor
 axios.interceptors.request.use(

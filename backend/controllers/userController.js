@@ -12,7 +12,10 @@ const register = catchAsync(async (req, res, next) => {
     if (!user) {
         const newUser = new UserModel(req.body);
         const savedUser = await newUser.save();
-        await new Email({ email: savedUser.email, username: savedUser.username }, 'https://petarshop.onrender.com').sendWelcome();
+        await new Email(
+            { email: savedUser.email, username: savedUser.username },
+            process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : 'https://petarshop.onrender.com'
+        ).sendWelcome();
         return res.status(200).json({
             status: 'success',
             message: 'User successufully registered',
