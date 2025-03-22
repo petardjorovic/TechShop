@@ -72,4 +72,16 @@ const getAllUsers = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = { addProduct, deleteSingleProduct, editSingleProduct, getAllUsers };
+const deleteUser = catchAsync(async (req, res, next) => {
+    const deletedUser = await UserModel.deleteOne({ _id: req.params.userId });
+    if (deletedUser.acknowledged && deletedUser.deletedCount === 1) {
+        return res.status(200).json({
+            status: 'success',
+            message: 'User succesufully deleted',
+        });
+    } else {
+        return next(new AppError('There is not such user', 404));
+    }
+});
+
+module.exports = { addProduct, deleteSingleProduct, editSingleProduct, getAllUsers, deleteUser };

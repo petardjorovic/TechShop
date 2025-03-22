@@ -4,8 +4,17 @@
   .product-wrapper {
     padding: 2rem;
     display: flex;
-    justify-content: center;
     align-items: start;
+    gap: 2rem;
+
+    @media screen and (max-width: $large-screen) {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @media screen and (max-width: $medium-screen) {
+      flex-direction: column;
+    }
 
     .product-left {
       display: flex;
@@ -32,11 +41,39 @@
       //   border: 1px solid red;
       padding-top: 3rem;
 
+      @media screen and (max-width: $large-screen) {
+        max-width: 500px;
+        text-align: center;
+        gap: 20px;
+      }
+
+      @media screen and (max-width: $medium-screen) {
+        flex-direction: column;
+      }
+
+      .reviews {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        @media screen and (max-width: $medium-screen) {
+          justify-content: center;
+        }
+      }
+
       .bottom {
         display: flex;
         align-items: center;
         justify-content: start;
-        gap: 3rem;
+        gap: 1rem;
+
+        @media screen and (max-width: $large-screen) {
+          justify-content: center;
+        }
+
+        @media screen and (max-width: $medium-screen) {
+          justify-content: center;
+        }
 
         .price {
           margin: 0;
@@ -45,6 +82,11 @@
           background-color: rgb(231, 54, 54);
           border-radius: 20px;
           color: white;
+
+          @media screen and (max-width: $medium-screen) {
+            padding-inline: 15px;
+            font-size: 1.1rem;
+          }
         }
 
         button {
@@ -56,11 +98,58 @@
           color: white;
           transition: 0.3s ease-in;
 
+          @media screen and (max-width: $medium-screen) {
+            padding: 10px 14px;
+            font-size: 0.8rem;
+          }
+
           &:hover {
             background-color: #0b1a92;
           }
         }
       }
+    }
+  }
+  .leave-comment-wrapper {
+    padding: 2rem;
+    display: flex;
+    width: 50%;
+    align-items: start;
+    flex-direction: column;
+    padding-bottom: 0;
+
+    @media screen and (max-width: $large-screen) {
+      margin: 0 auto;
+    }
+
+    @media screen and (max-width: $medium-screen) {
+      width: 100%;
+    }
+
+    .comment-form {
+      width: 100%;
+    }
+  }
+
+  .comments-wrapper {
+    padding: 2rem;
+    padding-top: 0;
+    display: flex;
+    width: 50%;
+    align-items: start;
+    flex-direction: column;
+
+    @media screen and (max-width: $large-screen) {
+      margin: 0 auto;
+    }
+
+    @media screen and (max-width: $medium-screen) {
+      width: 100%;
+    }
+
+    .single-comment {
+      width: 100%;
+      margin-bottom: 0.5rem;
     }
   }
 }

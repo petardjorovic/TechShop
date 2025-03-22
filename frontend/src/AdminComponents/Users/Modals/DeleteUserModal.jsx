@@ -2,20 +2,16 @@ import Modal from "react-modal";
 import customModalStyles from "../../../../public/js/customModalStyles";
 import { useDispatch } from "react-redux";
 import { showLoader } from "../../../store/loader/loaderSlice";
-import { deleteComment } from "../../../services/commentService";
+import { deleteUser } from "../../../services/adminService";
 import { toast } from "react-toastify";
 
-function DeleteCommentModal({
-  currentComment,
-  setIsDeleteModal,
-  rerenderView,
-}) {
+function DeleteUserModal({ setIsDeleteModal, currentUser, rerenderView }) {
   const dispatch = useDispatch();
 
-  const deleteCurrentComment = async () => {
+  const deleteCurrentUser = async () => {
     setIsDeleteModal(false);
     dispatch(showLoader(true));
-    const res = await deleteComment(currentComment._id);
+    const res = await deleteUser(currentUser._id);
     dispatch(showLoader(false));
     if (res.status === "success") {
       if (typeof rerenderView === "function") rerenderView();
@@ -24,14 +20,14 @@ function DeleteCommentModal({
       toast.error(res.message);
     }
   };
+
   return (
     <Modal isOpen={true} ariaHideApp={false} style={customModalStyles} centered>
       <div className="text-center">
         <h3>
-          Are you sure that you want to delete{" "}
-          <span className="text-danger">{currentComment.author}</span>'s comment
-          on <span className="text-primary">{currentComment.productTitle}</span>{" "}
-          with content "{currentComment.content}" ?
+          Are you sure that you want to delete user{" "}
+          <span className="text-danger">{currentUser.username}</span> with email
+          address <span className="text-primary">{currentUser.email}</span>?
         </h3>
       </div>
       <div className="btns-wrapper mt-4 d-flex justify-content-between">
@@ -42,7 +38,7 @@ function DeleteCommentModal({
         >
           Cancel
         </button>
-        <button className="btn btn-danger" onClick={deleteCurrentComment}>
+        <button className="btn btn-danger" onClick={deleteCurrentUser}>
           Delete
         </button>
       </div>
@@ -50,4 +46,4 @@ function DeleteCommentModal({
   );
 }
 
-export default DeleteCommentModal;
+export default DeleteUserModal;

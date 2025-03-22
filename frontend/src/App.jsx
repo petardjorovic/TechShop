@@ -10,6 +10,7 @@ import { setUser } from "./store/user/userSlice";
 import { useEffect, useState } from "react";
 import { showDashboard } from "./store/dashboard/dashboardSlice";
 import { setCart } from "./store/cart/cartSlice";
+import "./App.scss";
 
 function App() {
   const { isDashboard } = useSelector((state) => state.dashboardStore);

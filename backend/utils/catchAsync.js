@@ -3,7 +3,7 @@ const AppError = require('./AppError');
 module.exports = (func) => {
     return (req, res, next) => {
         func(req, res, next).catch((err) => {
-            // console.error(err, 'catchAsync error');
+            console.error(err, 'catchAsync error');
 
             //* Mongoose validation
             if (err.name === 'ValidationError') {

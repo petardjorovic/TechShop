@@ -3,10 +3,13 @@ import { useDispatch } from "react-redux";
 import { showLoader } from "../../store/loader/loaderSlice";
 import { getAllUsers } from "../../services/adminService";
 import "./UsersComponent.scss";
+import DeleteUserModal from "./Modals/DeleteUserModal";
 
 function UsersComponent() {
   const dispatch = useDispatch();
   const [allUsers, setAllUsers] = useState([]);
+  const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
     fetchUsers();
@@ -17,6 +20,11 @@ function UsersComponent() {
     const res = await getAllUsers();
     dispatch(showLoader(false));
     if (res.status === "success") setAllUsers(res.allUsers);
+  };
+
+  const openDeleteModal = (user) => {
+    setCurrentUser(user);
+    setIsDeleteModal(true);
   };
 
   const displayAllUsers = () => {
@@ -31,7 +39,12 @@ function UsersComponent() {
           <td>
             <div className="btns-wrapper">
               <button className="btn btn-warning">Edit</button>
-              <button className="btn btn-danger">Delete</button>
+              <button
+                className="btn btn-danger"
+                onClick={() => openDeleteModal(user)}
+              >
+                Delete
+              </button>
             </div>
           </td>
         </tr>
@@ -54,6 +67,13 @@ function UsersComponent() {
         </thead>
         <tbody>{allUsers.length > 0 && displayAllUsers()}</tbody>
       </table>
+      {isDeleteModal && (
+        <DeleteUserModal
+          currentUser={currentUser}
+          setIsDeleteModal={setIsDeleteModal}
+          rerenderView={fetchUsers}
+        />
+      )}
     </div>
   );
 }

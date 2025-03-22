@@ -38,6 +38,8 @@ function ProductsComponent() {
           </td>
           <td>{product.title}</td>
           <td>{product.price}</td>
+          <td>Category</td>
+          <td>{product.rating.toFixed(1)}</td>
           <td>
             <div className="btns-wrapper">
               <button
@@ -78,6 +80,8 @@ function ProductsComponent() {
             <th>Image</th>
             <th>Title</th>
             <th>Price</th>
+            <th>Category</th>
+            <th>Rating</th>
             <th>Actions</th>
           </tr>
         </thead>

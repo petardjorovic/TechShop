@@ -30,7 +30,7 @@ function NavigationComponent() {
 
   const logoutUser = () => {
     localStorage.removeItem(localStorageConfig.USER);
-    dispatch(removeUser);
+    dispatch(removeUser());
     navigate("/authorization");
   };
 

@@ -35,3 +35,24 @@ export const getSingleProduct = async (productId) => {
     };
   }
 };
+
+export const rateSingleProduct = async (rate, productId) => {
+  try {
+    const res = await axios.patch("/api/v1/products/single", {
+      productRate: rate,
+      productId,
+    });
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+  } catch (err) {
+    console.error(err, "err iz servisa rate product");
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
+  }
+};

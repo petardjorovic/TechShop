@@ -12,9 +12,15 @@ const userSlice = createSlice({
     },
     removeUser: (state) => {
       state.user = {};
+      localStorage.removeItem(localStorageConfig.TOKEN);
+    },
+    voteUser: (state, action) => {
+      const newUser = state.user;
+      newUser.votedFor.push(action.payload);
+      state.user = newUser;
     },
   },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
+export const { setUser, removeUser, voteUser } = userSlice.actions;
 export default userSlice.reducer;

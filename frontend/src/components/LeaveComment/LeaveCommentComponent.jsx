@@ -55,9 +55,9 @@ function LeaveCommentComponent({ product }) {
 
   return (
     <>
-      <div className="leave-comment-wrapper col-6 mt-4">
+      <div className="leave-comment-wrapper">
         <h4>Leave Comment</h4>
-        <form className="pt-1 pb-4" onSubmit={handleSubmit}>
+        <form className="comment-form pt-1 pb-4" onSubmit={handleSubmit}>
           <LabelComponent htmlFor={"comment"} color={!isComment}>
             {isComment ? "Comment" : "Comment is required"}
           </LabelComponent>
@@ -78,12 +78,12 @@ function LeaveCommentComponent({ product }) {
           </ButtonComponent>
         </form>
       </div>
-      <div className="comments-wrapper col-6">
+      <div className="comments-wrapper">
         <h4>Comments({allComments.length})</h4>
         {allComments.length > 0 &&
           allComments.map((comment, index) => {
             return (
-              <div className="card my-1" key={index}>
+              <div className="single-comment card" key={index}>
                 <div className="card-body">
                   <h5 className="card-title">{comment.author}</h5>
                   <p className="card-text">{comment.content}</p>
