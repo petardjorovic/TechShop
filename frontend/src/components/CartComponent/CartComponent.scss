@@ -22,9 +22,6 @@ $light-text: #abb0be;
 .cart-wrapper {
   position: relative;
 
-  svg {
-  }
-
   .cart-count {
     position: absolute;
     top: -14px;
@@ -46,6 +43,10 @@ $light-text: #abb0be;
     position: absolute;
     right: -27px;
     z-index: 99999;
+
+    @media screen and (max-width: "768px") {
+      display: none;
+    }
 
     .shopping-cart {
       margin: 20px 0;

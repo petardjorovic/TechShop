@@ -30,7 +30,7 @@ function OrderPage() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-8 offset-2">
+        <div className="col-10 offset-1">
           {displaySteps()}
           {cart.length > 0 && currentStep !== 2 && <OrderButtons />}
         </div>
