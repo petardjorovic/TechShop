@@ -1,6 +1,41 @@
 @import "../../assets/sass/main.scss";
 
 .container-fluid {
+  .dashboard-content {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+
+    .col-md-3 {
+      @media (max-width: "768px") {
+        width: 10%;
+        min-width: 40px;
+      }
+    }
+
+    .col-md-9 {
+      @media (max-width: "768px") {
+        width: 90%;
+      }
+    }
+
+    .sidebar {
+      flex: 0 0 25%;
+
+      @media (max-width: "768px") {
+        flex: 0 0 5%;
+        min-width: 40px;
+      }
+    }
+
+    .content {
+      flex: 0 0 75%;
+
+      @media (max-width: "768px") {
+        flex: 0 0 95%;
+      }
+    }
+  }
 }
 
 .Toastify__toast {

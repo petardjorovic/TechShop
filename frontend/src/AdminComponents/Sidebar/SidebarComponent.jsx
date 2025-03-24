@@ -15,7 +15,7 @@ function SidebarComponent() {
           className={activeView === el.name ? "active" : null}
         >
           <i className={el.icon}></i>
-          <span>{el.name}</span>
+          <span className="title">{el.name}</span>
         </li>
       );
     });
@@ -33,6 +33,11 @@ function SidebarComponent() {
           <h3>
             Dashboard &nbsp; / &nbsp; <Link to={"/"}>Home</Link>
           </h3>
+          <h4>
+            <Link to={"/"}>
+              <i className="ion-home"></i>
+            </Link>
+          </h4>
           <span></span>
         </div>
         <div className="navigation">

@@ -6,8 +6,25 @@
   height: 100vh;
   padding: 1rem 0;
 
-  .header h3 {
-    padding: 1rem;
+  .header {
+    h3 {
+      padding: 1rem;
+
+      @media screen and (max-width: "768px") {
+        display: none;
+      }
+    }
+    h4 {
+      padding: 0.5rem;
+      i {
+        font-size: 1.8rem;
+        color: tomato;
+      }
+
+      @media screen and (min-width: "768px") {
+        display: none;
+      }
+    }
   }
 
   .navigation {
@@ -29,6 +46,12 @@
 
         i {
           font-size: 1.8rem;
+        }
+
+        span {
+          @media screen and (max-width: "768px") {
+            display: none;
+          }
         }
       }
     }
