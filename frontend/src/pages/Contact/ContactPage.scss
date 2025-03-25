@@ -1,0 +1,27 @@
+.contact-wrapper {
+  margin: 0 auto;
+  width: 80%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+
+  .contact-form {
+    .full-name {
+      display: flex;
+      gap: 20px;
+
+      @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    textarea {
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+      outline: none;
+      border: 1px solid gray;
+    }
+  }
+}

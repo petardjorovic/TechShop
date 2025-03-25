@@ -8,6 +8,7 @@ function InputComponent({
   inputColor,
   defaultValue,
   className,
+  value,
 }) {
   return (
     <>
@@ -19,6 +20,7 @@ function InputComponent({
         style={{ border: inputColor ? "1px solid red" : "" }}
         defaultValue={defaultValue}
         className={className}
+        value={value}
       />
     </>
   );

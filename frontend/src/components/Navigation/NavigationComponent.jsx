@@ -44,7 +44,7 @@ function NavigationComponent() {
         </li>
         <div className="dropdown-content">
           <li>
-            <NavLink>Profile</NavLink>
+            <NavLink to={"/profile"}>Profile</NavLink>
           </li>
           {user.role === "admin" ? (
             <li>

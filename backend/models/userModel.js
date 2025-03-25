@@ -41,6 +41,11 @@ const userSchema = new Schema(
         lastName: {
             type: String,
         },
+        gender: {
+            type: String,
+            enum: ['male', 'female', ''],
+            default: '',
+        },
         address: {
             type: String,
         },
@@ -50,12 +55,19 @@ const userSchema = new Schema(
         postCode: {
             type: String,
         },
+        phoneNumber: {
+            type: String,
+        },
         votedFor: {
             type: Array,
         },
         status: {
             type: Boolean,
             default: false,
+        },
+        avatar: {
+            type: String,
+            default: 'avatar.webp',
         },
     },
     {

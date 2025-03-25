@@ -5,6 +5,10 @@
   overflow-y: scroll;
   background-color: #212529;
 
+  @media screen and (max-width: "768px") {
+    height: 100%;
+  }
+
   // table {
   //   display: flex;
   //   flex-flow: column;
