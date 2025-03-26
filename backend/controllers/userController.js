@@ -50,6 +50,23 @@ const login = catchAsync(async (req, res, next) => {
     });
 });
 
+//* Change User Password
+const changePassword = catchAsync(async (req, res, next) => {
+    const user = await UserModel.findById(req.user._id).select('+password');
+    if (!user) return next(new AppError('There is not such user', 404));
+    const checkPassword = await user.isPasswordCorrect(req.body.currentPassword, user.password);
+    if (!checkPassword) return next(new AppError('You have to enter valid current password', 401));
+    if (req.body.newPassword !== req.body.confirmNewPassword) return next(new AppError('New entered passwords must match', 400));
+    user.password = req.body.newPassword;
+    const savedNewUserPass = await user.save();
+    if (!savedNewUserPass) return next(new AppError('An error on server, please try later', 500));
+
+    res.status(200).json({
+        status: 'success',
+        message: 'You have succesuffully changed your password. Please login again with new password',
+    });
+});
+
 //* Edit User Profile
 const editUserProfile = catchAsync(async (req, res, next) => {
     const userData = req.body.data ? JSON.parse(req.body.data) : req.body;
@@ -91,4 +108,5 @@ module.exports = {
     login,
     editUserProfile,
     getSingleUser,
+    changePassword,
 };

@@ -5,9 +5,11 @@ import { urlConfig } from "../../config/urlConfig";
 import "./ProfilePage.scss";
 import EditProfileModal from "./Modals/EditProfileModal";
 import { getSingleUser } from "../../services/userService";
+import EditPasswordModal from "./Modals/EditPasswordModal";
 
 function ProfilePage() {
   const [isEditModal, setIsEditModal] = useState(false);
+  const [isEditPasswordModal, setIsEditPasswordModal] = useState(false);
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
 
@@ -58,7 +60,12 @@ function ProfilePage() {
                 <strong>Password: </strong>
                 {"  "}
                 <span>
-                  <button className="btn btn-success">Change</button>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => setIsEditPasswordModal(true)}
+                  >
+                    Change
+                  </button>
                 </span>
               </p>
               <p>
@@ -85,7 +92,9 @@ function ProfilePage() {
           Edit profile
         </button>
       </div>
-
+      {isEditPasswordModal && (
+        <EditPasswordModal setIsEditPasswordModal={setIsEditPasswordModal} />
+      )}
       {isEditModal && user.hasOwnProperty("username") && (
         <EditProfileModal
           user={user}

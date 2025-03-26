@@ -14,4 +14,6 @@ router.route('/editUser').put(authorizationValidation.protect, uploadUsers.singl
 
 router.route('/getSingleUser').get(authorizationValidation.protect, userController.getSingleUser);
 
+router.route('/changePassword').patch(authorizationValidation.protect, userController.changePassword);
+
 module.exports = router;
