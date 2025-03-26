@@ -3,7 +3,7 @@ import customModalStyles from "../../../../public/js/customModalStyles";
 import LabelComponent from "../../../components/Label/LabelComponent";
 import InputComponent from "../../../components/Input/InputComponent";
 import ButtonComponent from "../../../components/Button/ButtonComponent";
-import "./EditPasswordModal.scss";
+import "./EditProfileModal.scss";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { useFormik } from "formik";
