@@ -86,7 +86,7 @@ const forgotPassword = catchAsync(async (req, res, next) => {
             { email: user.email, username: user.username },
             process.env.NODE_ENV === 'development'
                 ? `http://localhost:5173/resetPassword/${token}`
-                : `https://petarshop.onrender.com/${token}`
+                : `https://petarshop.onrender.com/resetPassword/${token}`
         ).sendResetPassword();
 
         res.status(200).json({
