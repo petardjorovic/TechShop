@@ -24,4 +24,9 @@ export const adminSidebarConfig = [
     icon: "ion-compose",
     url: "comments",
   },
+  {
+    name: "Categories",
+    icon: "ion-pricetags",
+    url: "categories",
+  },
 ];

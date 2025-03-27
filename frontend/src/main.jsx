@@ -27,6 +27,7 @@ import AddProductComponent from "./AdminComponents/AddProduct/AddProductComponen
 import UsersComponent from "./AdminComponents/Users/UsersComponent.jsx";
 import CommentsComponent from "./AdminComponents/Comments/CommentsComponent.jsx";
 import ProductsComponent from "./AdminComponents/Products/ProductsComponent.jsx";
+import CategoryComponent from "./AdminComponents/Categories/CategoryComponent.jsx";
 
 //* protection
 import AdminProtect from "./AdminComponents/AdminProtect/AdminProtect.jsx";
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: "comments",
         element: <CommentsComponent />,
+      },
+      {
+        path: "categories",
+        element: <CategoryComponent />,
       },
     ],
   },

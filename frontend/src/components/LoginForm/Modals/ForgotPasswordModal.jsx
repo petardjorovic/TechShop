@@ -37,6 +37,10 @@ function ForgotPasswordModal({ setIsForgotPassModal }) {
   };
   return (
     <Modal isOpen={true} ariaHideApp={false} style={customModalStyles} centered>
+      <h2 className="modal-title">Forgot Your Password?</h2>
+      <p className="modal-subtitle">
+        We'll email you a link to reset your password.
+      </p>
       <form className="forgot-pass-form" onSubmit={handleSubmit}>
         <div className="input-wrap">
           <label

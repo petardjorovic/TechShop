@@ -14,38 +14,25 @@ const productSchema = new Schema(
         price: {
             type: Number,
             required: [true, 'Product price is required'],
+            min: [0, 'Price must be a positive number'],
         },
         image: {
             type: String,
             required: [true, 'Product Image is required'],
         },
-        // rating: {
-        //     type: Number,
-        //     default: 0.0,
-        // },
         allRatings: {
             type: [Number],
             default: [],
+        },
+        categoryId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Category',
         },
     },
     {
         timestamps: true,
     }
 );
-
-// productSchema.pre('save', function (next) {
-//     // Filtriraj sve nebrojčane vrednosti iz allRatings
-//     this.allRatings = this.allRatings.filter((rate) => typeof rate === 'number' && !isNaN(rate));
-
-//     if (this.allRatings.length === 0) {
-//         this.rating = 0.0;
-//     } else {
-//         this.rating = parseFloat((this.allRatings.reduce((total, rate) => total + rate, 0) / this.allRatings.length).toFixed(2));
-
-//         console.log(this.rating, 'ovo je rating');
-//     }
-//     next();
-// });
 
 // Definisanje virtualnog polja za izračunavanje proseka ocena
 productSchema.virtual('rating').get(function () {

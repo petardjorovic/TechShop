@@ -16,72 +16,8 @@ function OrderProcessStepOne() {
   useEffect(() => {
     setTotal(cart.reduce((total, item) => total + item.totalAmount, 0));
   }, [cart]);
+
   return (
-    // <table className="table table-hover mt-4">
-    //   <thead>
-    //     <tr>
-    //       <th scope="col">Product</th>
-    //       <th scope="col">Quantity</th>
-    //       <th scope="col">Total</th>
-    //     </tr>
-    //   </thead>
-    //   <tbody className="align-middle">
-    //     {cart.length ? (
-    //       cart.map((item, index) => {
-    //         return (
-    //           <tr key={index} className="">
-    //             <td className="img-title">
-    //               <img
-    //                 src={`${urlConfig.backend}/uploads/${item.image}`}
-    //                 alt={item.title}
-    //                 style={{
-    //                   width: "70px",
-    //                   height: "70px",
-    //                   objectFit: "contain",
-    //                 }}
-    //               />
-    //               {item.title}
-    //             </td>
-    //             <td>
-    //               <div className="counter-box">
-    //                 <span
-    //                   className="minus"
-    //                   onClick={() =>
-    //                     dispatch(changeCounter({ index, act: -1 }))
-    //                   }
-    //                 >
-    //                   -
-    //                 </span>
-    //                 <span className="counter">{item.count}</span>
-    //                 <span
-    //                   className="plus"
-    //                   onClick={() => dispatch(changeCounter({ index, act: 1 }))}
-    //                 >
-    //                   +
-    //                 </span>
-    //               </div>
-    //             </td>
-    //             <td>{convertPrice(item.totalAmount)}</td>
-    //           </tr>
-    //         );
-    //       })
-    //     ) : (
-    //       <tr>
-    //         <td>The Cart is empty</td>
-    //       </tr>
-    //     )}
-    //     {cart.length > 0 && (
-    //       <tr className="table-info">
-    //         <td colSpan="2">
-    //           <strong>TOTAL</strong>
-    //         </td>
-    //         <td colSpan="1">
-    //           <strong>{convertPrice(total)}</strong>
-    //         </td>
-    //       </tr>
-    //     )}
-    //   </tbody>
-    // </table>
     <div className="row">
       <div className="card items-wrapper mt-4 py-4">
         <div className="title-heading">
@@ -90,7 +26,7 @@ function OrderProcessStepOne() {
         {cart.length > 0 ? (
           cart.map((item, index) => {
             return (
-              <div className="card .item-wrapper mb-4">
+              <div className="card .item-wrapper mb-4" key={index}>
                 <div className="card-body px-4">
                   <div className="item-img">
                     <img
