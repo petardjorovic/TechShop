@@ -63,6 +63,10 @@ const router = createBrowserRouter([
         path: "/order",
         element: <OrderPage />,
       },
+      {
+        path: "/resetPassword/:token",
+        element: <ResetPasswordPage />,
+      },
     ],
   },
   {
@@ -94,10 +98,6 @@ const router = createBrowserRouter([
         element: <CommentsComponent />,
       },
     ],
-  },
-  {
-    path: "/resetPassword/:token",
-    element: <ResetPasswordPage />,
   },
 ]);
 

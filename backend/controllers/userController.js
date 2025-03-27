@@ -94,6 +94,8 @@ const forgotPassword = catchAsync(async (req, res, next) => {
             message: 'Password reset link send to the user email',
         });
     } catch (err) {
+        console.log(err, 'err mail');
+
         user.passwordResetToken = undefined;
         user.passwordResetTokenExpires = undefined;
         await user.save({ validateBeforeSave: false });
