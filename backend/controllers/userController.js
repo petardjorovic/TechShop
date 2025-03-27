@@ -5,6 +5,7 @@ const Email = require('../utils/Email');
 const signToken = require('../utils/signToken');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 //* ==============================
 //* ========== REGISTER ==========
@@ -50,7 +51,9 @@ const login = catchAsync(async (req, res, next) => {
     });
 });
 
-//* Change User Password
+//* ============================
+//* === CHANGE USER PASSWORD ===
+//* ============================
 const changePassword = catchAsync(async (req, res, next) => {
     const user = await UserModel.findById(req.user._id).select('+password');
     if (!user) return next(new AppError('There is not such user', 404));
@@ -67,7 +70,66 @@ const changePassword = catchAsync(async (req, res, next) => {
     });
 });
 
-//* Edit User Profile
+//* =======================
+//* === FORGOT PASSWORD ===
+//* =======================
+const forgotPassword = catchAsync(async (req, res, next) => {
+    const user = await UserModel.findOne({ email: req.body.email });
+    if (!user) return next(new AppError('There is user with this email', 404));
+
+    const token = user.createResetPasswordToken();
+
+    await user.save({ validateBeforeSave: false });
+
+    try {
+        await new Email(
+            { email: user.email, username: user.username },
+            process.env.NODE_ENV === 'development'
+                ? `http://localhost:5173/resetPassword/${token}`
+                : `https://petarshop.onrender.com/${token}`
+        ).sendResetPassword();
+
+        res.status(200).json({
+            status: 'success',
+            message: 'Password reset link send to the user email',
+        });
+    } catch (err) {
+        user.passwordResetToken = undefined;
+        user.passwordResetTokenExpires = undefined;
+        await user.save({ validateBeforeSave: false });
+        return next(new AppError('There was an error sending password reset email. Please try again later', 500));
+    }
+});
+
+//* ======================
+//* === RESET PASSWORD ===
+//* ======================
+const resetPassword = catchAsync(async (req, res, next) => {
+    // 1. IF THE USER EXISTS WITH THE GIVEN TOKEN OR TOKEN HAS NOT EXPIRED
+    const token = crypto.createHash('sha256').update(req.params.token).digest('hex');
+    const user = await UserModel.findOne({ passwordResetToken: token, passwordResetTokenExpires: { $gt: Date.now() } });
+    if (!user) return next(new AppError('Token is invalid or has expired', 400));
+    if (req.body.newPassword !== req.body.confirmNewPassword) {
+        return next(new AppError('New Password and Confirm New Password must match ', 400));
+    }
+
+    // 2. RESETING THE USER PASSWORD
+    user.password = req.body.newPassword;
+    user.passwordResetToken = undefined;
+    user.passwordResetTokenExpires = undefined;
+    user.passwordChangedAt = Date.now();
+    const savedUser = await user.save();
+    if (!savedUser) return next(new AppError('An error occurred on server side, please try again later', 500));
+
+    res.status(200).json({
+        status: 'success',
+        message: 'You have successufully reset your password, now you have to login with new password',
+    });
+});
+
+//* =========================
+//* === EDIT USER PROFILE ===
+//* =========================
 const editUserProfile = catchAsync(async (req, res, next) => {
     const userData = req.body.data ? JSON.parse(req.body.data) : req.body;
 
@@ -92,7 +154,9 @@ const editUserProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-//* Get Single User
+//* =======================
+//* === GET SINGLE USER ===
+//* =======================
 const getSingleUser = catchAsync(async (req, res, next) => {
     const user = await UserModel.findById(req.user._id);
     if (!user) return next(new AppError('You have to be logged in or there is not such user', 401));
@@ -109,4 +173,6 @@ module.exports = {
     editUserProfile,
     getSingleUser,
     changePassword,
+    forgotPassword,
+    resetPassword,
 };

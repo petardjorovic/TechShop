@@ -61,6 +61,46 @@ export const changeUserPassword = async (passwords) => {
   }
 };
 
+export const forgotPassword = async (email) => {
+  try {
+    const res = await axios.post("/api/v1/user/forgotPassword", { email });
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+    return res;
+  } catch (err) {
+    console.error(err, "err iz servisa forgot password");
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
+  }
+};
+
+export const resetPassword = async (data) => {
+  try {
+    const res = await axios.patch(
+      `/api/v1/user/resetPassword/${data.token}`,
+      data.values
+    );
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+  } catch (err) {
+    console.error(err, "err iz servisa reset password");
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
+  }
+};
+
 export const editUserProfile = async (data) => {
   try {
     const res = await axios.put("/api/v1/user/editUser", data);

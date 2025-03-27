@@ -3,7 +3,7 @@ import customModalStyles from "../../../../public/js/customModalStyles";
 import LabelComponent from "../../../components/Label/LabelComponent";
 import InputComponent from "../../../components/Input/InputComponent";
 import ButtonComponent from "../../../components/Button/ButtonComponent";
-import "./EditProfileModal.scss";
+import "./EditPasswordModal.scss";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { useFormik } from "formik";
@@ -32,12 +32,11 @@ function EditPasswordModal({ setIsEditPasswordModal }) {
         .required("Confirm password is required"),
     }),
     onSubmit: async (values) => {
-      console.log(values);
+      setIsEditPasswordModal(false);
       dispatch(showLoader(true));
       const res = await changeUserPassword(values);
       dispatch(showLoader(false));
       if (res.status === "success") {
-        setIsEditPasswordModal(false);
         toast.success(res.message);
       } else {
         toast.error(res.message);

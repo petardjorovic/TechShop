@@ -19,6 +19,7 @@ import DashboardPage from "./pages/Dashboard/DashboardPage.jsx";
 import SingleProductPage from "./pages/SingleProduct/SingleProductPage.jsx";
 import OrderPage from "./pages/Order/OrderPage.jsx";
 import ProfilePage from "./pages/Profile/ProfilePage.jsx";
+import ResetPasswordPage from "./pages/ResetPassword/ResetPasswordPage.jsx";
 
 //* Admin's components
 import StatisticsComponent from "./AdminComponents/Statistics/StatisticsComponent.jsx";
@@ -32,7 +33,6 @@ import AdminProtect from "./AdminComponents/AdminProtect/AdminProtect.jsx";
 
 //* router
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { adminSidebarConfig } from "./config/AdminSidebarConfig.js";
 
 const router = createBrowserRouter([
   {
@@ -94,6 +94,10 @@ const router = createBrowserRouter([
         element: <CommentsComponent />,
       },
     ],
+  },
+  {
+    path: "resetPassword/:token",
+    element: <ResetPasswordPage />,
   },
 ]);
 

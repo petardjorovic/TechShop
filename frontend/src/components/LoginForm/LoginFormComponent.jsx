@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { localStorageConfig } from "../../config/LocalStorageConfig";
 import { setUser } from "../../store/user/userSlice";
+import ForgotPasswordModal from "./Modals/ForgotPasswordModal";
 
 function LoginFormComponent() {
   const [data, setData] = useState({
@@ -24,6 +25,7 @@ function LoginFormComponent() {
   const [isPasswordEmpty, setIsPasswordEmpty] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [isforgotPassModal, setIsForgotPassModal] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -102,7 +104,13 @@ function LoginFormComponent() {
           </span>
         </div>
         <ButtonComponent className={"btn btn-success"}>Login</ButtonComponent>
+        <p className="forgot-pass" onClick={() => setIsForgotPassModal(true)}>
+          Forgot password?
+        </p>
       </form>
+      {isforgotPassModal && (
+        <ForgotPasswordModal setIsForgotPassModal={setIsForgotPassModal} />
+      )}
     </div>
   );
 }

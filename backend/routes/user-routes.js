@@ -16,4 +16,8 @@ router.route('/getSingleUser').get(authorizationValidation.protect, userControll
 
 router.route('/changePassword').patch(authorizationValidation.protect, userController.changePassword);
 
+router.route('/forgotPassword').post(userController.forgotPassword);
+
+router.route('/resetPassword/:token').patch(userController.resetPassword);
+
 module.exports = router;

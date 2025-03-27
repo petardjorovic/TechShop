@@ -111,5 +111,16 @@
         font-size: 1rem;
       }
     }
+
+    .forgot-pass {
+      margin-top: 0;
+      transition: 0.3s all ease;
+      user-select: none;
+
+      &:hover {
+        cursor: pointer;
+        color: red;
+      }
+    }
   }
 }

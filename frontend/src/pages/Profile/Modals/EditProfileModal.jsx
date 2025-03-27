@@ -48,6 +48,7 @@ function EditProfileModal({ user, rerenderView, setIsEditModal }) {
       : setIsEmailValid(true);
     if (!data.username || !data.email || !checkEmailValidation(data.email))
       return;
+    setIsEditModal(false);
     let userFormData;
     if (file) {
       userFormData = new FormData();
@@ -63,7 +64,6 @@ function EditProfileModal({ user, rerenderView, setIsEditModal }) {
     if (res.status === "success") {
       rerenderView();
       toast.success(res.message);
-      setIsEditModal(false);
     } else {
       toast.error(res.message);
     }

@@ -35,9 +35,9 @@ class Email {
         await this.send('Welcome to MyWebShop', 'welcome');
     }
 
-    // async sendResetPassword() {
-    //     await this.send('Reset your password', 'resetPassword');
-    // }
+    async sendResetPassword() {
+        await this.send('Reset your password', 'resetPassword');
+    }
 
     async send(subject, template) {
         const html = pug.renderFile(`${__dirname}/../views/${template}.pug`, {
