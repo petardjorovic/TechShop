@@ -5,7 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 import { resetPassword } from "../../services/userService";
 import { showLoader } from "../../store/loader/loaderSlice";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import LoaderComponent from "../../components/Loader/LoaderComponent";
 
 function ResetPasswordPage() {
   const { token } = useParams();
@@ -44,6 +45,7 @@ function ResetPasswordPage() {
     formik.errors[inputName];
   return (
     <div className="container">
+      <LoaderComponent />
       <div className="reset-pass-wrapper">
         <form onSubmit={formik.handleSubmit}>
           <div className="input-wrapper">
@@ -85,6 +87,7 @@ function ResetPasswordPage() {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 }
