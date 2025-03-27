@@ -96,7 +96,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "resetPassword/:token",
+    path: "/resetPassword/:token",
     element: <ResetPasswordPage />,
   },
 ]);
