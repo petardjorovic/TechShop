@@ -97,3 +97,21 @@ export const deleteUser = async (userId) => {
     };
   }
 };
+
+export const addCategory = async (categoryName) => {
+  try {
+    const res = await axios.post("/api/v1/admin/category", { categoryName });
+    if (res.status === 200 && res.data.status) {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+  } catch (err) {
+    console.error(err, "err iz servisa add category");
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
+  }
+};

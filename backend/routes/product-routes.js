@@ -3,7 +3,7 @@ const router = express.Router();
 const productController = require('../controllers/productController');
 const authorizationValidation = require('../utils/authorizationValidation');
 
-router.route('/').get(productController.getAllProduct);
+router.route('/').get(productController.getAllProducts);
 router
     .route('/single/:productId?')
     .get(productController.getSingleProduct)

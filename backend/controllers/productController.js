@@ -3,8 +3,8 @@ const UserModel = require('../models/userModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
-const getAllProduct = catchAsync(async (req, res, next) => {
-    const products = await ProductModel.find();
+const getAllProducts = catchAsync(async (req, res, next) => {
+    const products = await ProductModel.find().populate('categoryId');
     if (products.length > 0) {
         res.status(200).json({
             status: 'success',
@@ -49,4 +49,4 @@ const rateSingleProduct = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = { getAllProduct, getSingleProduct, rateSingleProduct };
+module.exports = { getAllProducts, getSingleProduct, rateSingleProduct };

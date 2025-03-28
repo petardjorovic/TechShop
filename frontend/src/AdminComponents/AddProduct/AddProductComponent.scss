@@ -1,22 +1,19 @@
 @import "../../assets/sass/main.scss";
 
 .add-product-wrapper {
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
-  padding: 4rem 1rem;
-
-  @media screen and (max-width: $large-screen) {
-    width: 70%;
-  }
-
-  @media screen and (max-width: $medium-screen) {
-    width: 100%;
-  }
+  background-color: #212529;
+  height: 100vh;
 
   .content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    color: aliceblue;
+    border-bottom: 2px solid aliceblue;
+    padding-block: 30px;
 
     h3 {
       text-align: center;
@@ -62,7 +59,10 @@
   .add-product-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
+    width: 50%;
+    margin: 0 auto;
+    padding-inline: 1rem;
 
     @media screen and (max-width: $large-screen) {
       width: 100%;
@@ -86,11 +86,12 @@
       label {
         padding-left: 0.5rem;
         font-size: 1.2rem;
+        color: aliceblue;
       }
 
       input {
         padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
+        border-radius: 0.25rem;
         outline: none;
         border: 1px solid gray;
 
@@ -101,6 +102,16 @@
         @media screen and (max-width: $small-screen) {
           width: 100%;
         }
+      }
+
+      .input-image {
+        color: aliceblue;
+      }
+
+      select {
+        outline: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
       }
     }
   }

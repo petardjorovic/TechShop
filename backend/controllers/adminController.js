@@ -1,5 +1,6 @@
 const ProductModel = require('../models/productModel');
 const UserModel = require('../models/userModel');
+const CategoryModel = require('../models/categoryModel');
 const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 const fs = require('fs');
@@ -64,7 +65,7 @@ const editSingleProduct = catchAsync(async (req, res, next) => {
 
 const getAllUsers = catchAsync(async (req, res, next) => {
     const allUsers = await UserModel.find({});
-    if (!allUsers) return next(new AppError('An error occurred, please try later', 404));
+    if (!allUsers) return next(new AppError('An error occurred, please try later', 500));
 
     res.status(200).json({
         status: 'success',
@@ -84,4 +85,44 @@ const deleteUser = catchAsync(async (req, res, next) => {
     }
 });
 
-module.exports = { addProduct, deleteSingleProduct, editSingleProduct, getAllUsers, deleteUser };
+const addCategory = catchAsync(async (req, res, next) => {
+    const category = new CategoryModel(req.body);
+    const savedCategory = await category.save();
+    console.log(savedCategory, 'savedCategory');
+    if (!savedCategory) return next(new AppError("An error occurred, category couldn't be saved", 500));
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Category successufully saved.',
+    });
+});
+
+const getAllCategories = catchAsync(async (req, res, next) => {
+    // const allCategories = await CategoryModel.find();
+    const allCategories = await CategoryModel.aggregate([
+        {
+            $lookup: {
+                from: 'products',
+                localField: '_id',
+                foreignField: 'categoryId',
+                as: 'products',
+                pipeline: [{ $project: { createdAt: 0, updatedAt: 0, __v: 0 } }],
+            },
+        },
+        {
+            $project: {
+                categoryName: 1,
+                products: 1,
+            },
+        },
+    ]);
+
+    if (!allCategories) return next(new AppError('An error occurred, please try later', 500));
+
+    res.status(200).json({
+        status: 'success',
+        allCategories,
+    });
+});
+
+module.exports = { addProduct, deleteSingleProduct, editSingleProduct, getAllUsers, deleteUser, addCategory, getAllCategories };

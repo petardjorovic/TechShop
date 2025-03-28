@@ -38,7 +38,7 @@ function ProductsComponent() {
           </td>
           <td>{product.title}</td>
           <td>{product.price}</td>
-          <td>Category</td>
+          <td>{product.categoryId.categoryName.toLowerCase()}</td>
           <td>{product.rating.toFixed(1)}</td>
           <td>
             <div className="btns-wrapper">

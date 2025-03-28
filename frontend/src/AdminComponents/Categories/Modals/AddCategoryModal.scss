@@ -1,0 +1,32 @@
+.add-category-form {
+  padding: 0;
+
+  .input-wrapper {
+    label {
+      @media screen and (max-width: "480px") {
+        font-size: 14px;
+      }
+    }
+
+    input {
+      border-radius: 2px;
+
+      @media screen and (max-width: "480px") {
+        padding: 2px 5px;
+      }
+    }
+  }
+
+  .btns-wrapper {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+      @media screen and (max-width: "480px") {
+        font-size: 12px;
+      }
+    }
+  }
+}

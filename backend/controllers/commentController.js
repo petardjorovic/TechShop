@@ -28,7 +28,7 @@ const getProductComments = catchAsync(async (req, res, next) => {
 
 const getAllComments = catchAsync(async (req, res, next) => {
     const allComments = await CommentModel.find({});
-    if (!allComments.length) return next(new AppError(`There is not any comment`, 404));
+    if (!allComments) return next(new AppError(`There is not any comment`, 404));
 
     res.status(200).json({
         status: 'success',
