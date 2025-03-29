@@ -61,6 +61,7 @@ const changePassword = catchAsync(async (req, res, next) => {
     if (!checkPassword) return next(new AppError('You have to enter valid current password', 401));
     if (req.body.newPassword !== req.body.confirmNewPassword) return next(new AppError('New entered passwords must match', 400));
     user.password = req.body.newPassword;
+    user.passwordChangedAt = Date.now();
     const savedNewUserPass = await user.save();
     if (!savedNewUserPass) return next(new AppError('An error on server, please try later', 500));
 
@@ -75,7 +76,7 @@ const changePassword = catchAsync(async (req, res, next) => {
 //* =======================
 const forgotPassword = catchAsync(async (req, res, next) => {
     const user = await UserModel.findOne({ email: req.body.email });
-    if (!user) return next(new AppError('There is user with this email', 404));
+    if (!user) return next(new AppError('There is not user with this email', 404));
 
     const token = user.createResetPasswordToken();
 

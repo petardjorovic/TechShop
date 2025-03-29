@@ -80,9 +80,11 @@ export const getAllUsers = async () => {
   }
 };
 
-export const deleteUser = async (userId) => {
+export const deleteUser = async (user) => {
   try {
-    const res = await axios.delete(`/api/v1/admin/user/${userId}`);
+    const res = await axios.delete(
+      `/api/v1/admin/user/${user.userId}/${user.userAvatar}`
+    );
     if (res.status === 200 && res.data.status === "success") {
       return {
         status: res.data.status,

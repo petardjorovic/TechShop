@@ -12,10 +12,9 @@ const userSlice = createSlice({
     },
     removeUser: (state) => {
       state.user = {};
-      localStorage.removeItem(localStorageConfig.TOKEN);
     },
     voteUser: (state, action) => {
-      const newUser = state.user;
+      const newUser = { ...state.user };
       newUser.votedFor.push(action.payload);
       state.user = newUser;
     },

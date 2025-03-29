@@ -31,6 +31,7 @@ import CategoryComponent from "./AdminComponents/Categories/CategoryComponent.js
 
 //* protection
 import AdminProtect from "./AdminComponents/AdminProtect/AdminProtect.jsx";
+import ProfileProtect from "./components/ProfileProtect/ProfileProtect.jsx";
 
 //* router
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -54,7 +55,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <ProfilePage />,
+        element: (
+          <ProfileProtect>
+            <ProfilePage />
+          </ProfileProtect>
+        ),
       },
       {
         path: "/product/:productId",

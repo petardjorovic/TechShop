@@ -44,8 +44,7 @@ const userSchema = new Schema(
         },
         gender: {
             type: String,
-            enum: ['male', 'female', ''],
-            default: '',
+            enum: ['male', 'female'],
         },
         address: {
             type: String,

@@ -11,7 +11,10 @@ function DeleteUserModal({ setIsDeleteModal, currentUser, rerenderView }) {
   const deleteCurrentUser = async () => {
     setIsDeleteModal(false);
     dispatch(showLoader(true));
-    const res = await deleteUser(currentUser._id);
+    const res = await deleteUser({
+      userId: currentUser._id,
+      userAvatar: currentUser.avatar,
+    });
     dispatch(showLoader(false));
     if (res.status === "success") {
       if (typeof rerenderView === "function") rerenderView();

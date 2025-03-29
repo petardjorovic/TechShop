@@ -4,6 +4,7 @@ import { showLoader } from "../../store/loader/loaderSlice";
 import { getAllUsers } from "../../services/adminService";
 import "./UsersComponent.scss";
 import DeleteUserModal from "./Modals/DeleteUserModal";
+import { toast } from "react-toastify";
 
 function UsersComponent() {
   const dispatch = useDispatch();
@@ -23,6 +24,10 @@ function UsersComponent() {
   };
 
   const openDeleteModal = (user) => {
+    if (user.role === "admin") {
+      toast.info("Cannot delete admin");
+      return;
+    }
     setCurrentUser(user);
     setIsDeleteModal(true);
   };

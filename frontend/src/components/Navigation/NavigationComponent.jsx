@@ -29,8 +29,9 @@ function NavigationComponent() {
   };
 
   const logoutUser = () => {
-    localStorage.removeItem(localStorageConfig.USER);
     dispatch(removeUser());
+    localStorage.removeItem(localStorageConfig.USER);
+    localStorage.removeItem(localStorageConfig.TOKEN);
     navigate("/authorization");
   };
 

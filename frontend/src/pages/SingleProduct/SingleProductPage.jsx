@@ -13,7 +13,8 @@ import LeaveCommentComponent from "../../components/LeaveComment/LeaveCommentCom
 import { urlConfig } from "../../config/urlConfig";
 import Rating from "@mui/material/Rating";
 import { toast } from "react-toastify";
-import { voteUser } from "../../store/user/userSlice";
+import { setUser } from "../../store/user/userSlice";
+import { localStorageConfig } from "../../config/LocalStorageConfig";
 
 function SingleProductPage() {
   const { productId } = useParams();
@@ -55,8 +56,11 @@ function SingleProductPage() {
     const res = await rateSingleProduct(newValue, productId);
     dispatch(showLoader(false));
     if (res.status === "success") {
-      setProduct({ ...product, allRatings: [...product.allRatings, newValue] });
-      dispatch(voteUser(productId));
+      // setProduct({ ...product, allRatings: [...product.allRatings, newValue] });
+      // dispatch(voteUser(productId));
+      setProduct(res.product);
+      dispatch(setUser(res.user));
+      localStorage.setItem(localStorageConfig.USER, JSON.stringify(res.user));
       let newArray = [...product.allRatings, newValue];
       let avgRating = (
         newArray.reduce((total, rate) => total + rate, 0) / newArray.length
@@ -83,7 +87,7 @@ function SingleProductPage() {
             <p className="description">{product.description}</p>
             <p className="reviews">
               Reviews:{" "}
-              {!user.hasOwnProperty("username") ||
+              {/* {!user.hasOwnProperty("username") ||
               user?.votedFor?.includes(productId) ? (
                 <Rating
                   name="read-only"
@@ -91,16 +95,16 @@ function SingleProductPage() {
                   precision={0.5}
                   readOnly
                 />
-              ) : (
-                <Rating
-                  name="simple-controlled"
-                  value={rateValue}
-                  precision={1}
-                  onChange={(event, newValue) => {
-                    sendUserVote(newValue);
-                  }}
-                />
-              )}
+              ) : ( */}
+              <Rating
+                name="simple-controlled"
+                value={rateValue}
+                precision={1}
+                onChange={(event, newValue) => {
+                  sendUserVote(newValue);
+                }}
+              />
+              {/* )} */}
             </p>
             <div className="bottom">
               <p className="price">{convertPrice(product.price)}</p>

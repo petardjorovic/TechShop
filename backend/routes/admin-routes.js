@@ -11,7 +11,7 @@ router
     .delete(authorizationValidation.protect, adminController.deleteSingleProduct)
     .put(authorizationValidation.protect, upload.single('file'), adminController.editSingleProduct);
 
-router.route('/user/:userId?').get(adminController.getAllUsers).delete(adminController.deleteUser);
+router.route('/user/:userId?/:userAvatar?').get(adminController.getAllUsers).delete(adminController.deleteUser);
 
 router.route('/category').post(authorizationValidation.protect, adminController.addCategory).get(adminController.getAllCategories);
 

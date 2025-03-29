@@ -42,10 +42,14 @@ export const rateSingleProduct = async (rate, productId) => {
       productRate: rate,
       productId,
     });
+    console.log(res, "res iz servisa rate single product");
+
     if (res.status === 200 && res.data.status === "success") {
       return {
         status: res.data.status,
         message: res.data.message,
+        user: res.data.user,
+        product: res.data.product,
       };
     }
   } catch (err) {

@@ -5,7 +5,6 @@ import LabelComponent from "../../../components/Label/LabelComponent";
 import InputComponent from "../../../components/Input/InputComponent";
 import "./EditProfileModal.scss";
 import { useState } from "react";
-import { checkEmailValidation } from "../../../utils/checkEmailValidation";
 import { useDispatch } from "react-redux";
 import { showLoader } from "../../../store/loader/loaderSlice";
 import { editUserProfile, getSingleUser } from "../../../services/userService";
@@ -14,20 +13,17 @@ import { useEffect } from "react";
 
 function EditProfileModal({ user, rerenderView, setIsEditModal }) {
   const [data, setData] = useState({
-    username: user?.username || "",
-    firstName: user?.firstName || "",
-    lastName: user?.lastName || "",
-    gender: user?.gender || "",
-    email: user?.email || "",
-    address: user?.address || "",
-    city: user?.city || "",
-    phoneNumber: user?.phoneNumber || "",
-    postCode: user?.postCode || "",
+    username: user?.username,
+    firstName: user?.firstName,
+    lastName: user?.lastName,
+    gender: user?.gender,
+    address: user?.address,
+    city: user?.city,
+    phoneNumber: user?.phoneNumber,
+    postCode: user?.postCode,
   });
   const [file, setFile] = useState(null);
-  const [isEmailEmpty, setIsEmailEmpty] = useState(false);
   const [isUsernameEmpty, setIsUsernameEmpty] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -42,12 +38,7 @@ function EditProfileModal({ user, rerenderView, setIsEditModal }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!data.username) setIsUsernameEmpty(true);
-    if (!data.email) setIsEmailEmpty(true);
-    checkEmailValidation(data.email)
-      ? setIsEmailValid(false)
-      : setIsEmailValid(true);
-    if (!data.username || !data.email || !checkEmailValidation(data.email))
-      return;
+    if (!data.username) return;
     setIsEditModal(false);
     let userFormData;
     if (file) {
@@ -83,24 +74,6 @@ function EditProfileModal({ user, rerenderView, setIsEditModal }) {
                   id={"username"}
                   type={"text"}
                   defaultValue={data.username}
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="input-wrapper">
-                <LabelComponent
-                  htmlFor={"email"}
-                  color={isEmailEmpty || isEmailValid}
-                >
-                  {isEmailEmpty
-                    ? "Email is required"
-                    : isEmailValid
-                    ? "Email is not valid"
-                    : "Email"}
-                </LabelComponent>
-                <InputComponent
-                  id={"email"}
-                  type={"text"}
-                  defaultValue={data.email}
                   onChange={handleChange}
                 />
               </div>

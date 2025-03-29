@@ -36,16 +36,23 @@ const rateSingleProduct = catchAsync(async (req, res, next) => {
         { $push: { allRatings: req.body.productRate } },
         { new: true }
     );
+
     if (!updatedProduct) return next(new AppError('There is not such product', 404));
 
     const savedProduct = await updatedProduct.save();
     if (!savedProduct) return next(new AppError('Product could not save to db', 404));
 
-    const updatedUser = await UserModel.updateOne({ _id: req.user._id }, { $push: { votedFor: req.body.productId } });
-    if (!updatedUser.acknowledged || updatedUser.matchedCount !== 1) return next(new AppError('An error occurred please try later', 404));
+    const updatedUser = await UserModel.findByIdAndUpdate(req.user._id, { $push: { votedFor: req.body.productId } }, { new: true });
+
+    if (!updatedUser) return next(new AppError('An error occurred please try later', 500));
+
+    const { password, __v, _id, createdAt, updatedAt, ...dataUser } = updatedUser.toObject();
+
     return res.status(200).json({
         status: 'success',
         message: 'You have successufully rated this product',
+        user: dataUser,
+        product: updatedProduct,
     });
 });
 

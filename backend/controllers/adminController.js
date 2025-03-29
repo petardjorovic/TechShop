@@ -21,13 +21,14 @@ const addProduct = catchAsync(async (req, res, next) => {
 
 const deleteSingleProduct = catchAsync(async (req, res, next) => {
     const { productId, productImg } = req.params;
+
     const deletedProduct = await ProductModel.deleteOne({ _id: productId });
     // console.log(deletedProduct, 'deletedProduct');
     if (deletedProduct.acknowledged && deletedProduct.deletedCount === 1) {
         const imgPath = path.join(__dirname, '..', 'uploads', productImg);
 
         fs.unlink(imgPath, (err) => {
-            if (err) return next(new AppError('This product has not been deleted', 400));
+            if (err) return next(new AppError('Image of this product has not been deleted', 500));
         });
 
         res.status(200).json({
@@ -76,6 +77,19 @@ const getAllUsers = catchAsync(async (req, res, next) => {
 const deleteUser = catchAsync(async (req, res, next) => {
     const deletedUser = await UserModel.deleteOne({ _id: req.params.userId });
     if (deletedUser.acknowledged && deletedUser.deletedCount === 1) {
+        if (req.params.userAvatar !== 'avatar.webp') {
+            const oldAvatarPath = path.join(__dirname, '..', 'uploads', 'users', req.params.userAvatar);
+
+            if (fs.existsSync(oldAvatarPath)) {
+                fs.unlink(oldAvatarPath, (err) => {
+                    if (err) {
+                        console.error(err, 'delete user avatar error');
+                        return next(new AppError('Avatar of this user has not been deleted, 500'));
+                    }
+                });
+            }
+        }
+
         return res.status(200).json({
             status: 'success',
             message: 'User succesufully deleted',

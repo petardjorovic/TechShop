@@ -12,12 +12,16 @@ import { useDispatch } from "react-redux";
 import { showLoader } from "../../../store/loader/loaderSlice";
 import { changeUserPassword } from "../../../services/userService";
 import { toast } from "react-toastify";
+import { removeUser } from "../../../store/user/userSlice";
+import { localStorageConfig } from "../../../config/LocalStorageConfig";
+import { useNavigate } from "react-router-dom";
 
 function EditPasswordModal({ setIsEditPasswordModal }) {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       currentPassword: "",
@@ -38,6 +42,10 @@ function EditPasswordModal({ setIsEditPasswordModal }) {
       dispatch(showLoader(false));
       if (res.status === "success") {
         toast.success(res.message);
+        dispatch(removeUser());
+        localStorage.removeItem(localStorageConfig.TOKEN);
+        localStorage.removeItem(localStorageConfig.USER);
+        navigate("/authorization");
       } else {
         toast.error(res.message);
       }
