@@ -11,8 +11,15 @@ router
     .delete(authorizationValidation.protect, adminController.deleteSingleProduct)
     .put(authorizationValidation.protect, upload.single('file'), adminController.editSingleProduct);
 
-router.route('/user/:userId?/:userAvatar?').get(adminController.getAllUsers).delete(adminController.deleteUser);
+router
+    .route('/user/:userId?/:userAvatar?')
+    .get(authorizationValidation.protect, adminController.getAllUsers)
+    .delete(authorizationValidation.protect, adminController.deleteUser);
 
-router.route('/category').post(authorizationValidation.protect, adminController.addCategory).get(adminController.getAllCategories);
+router
+    .route('/category')
+    .post(authorizationValidation.protect, adminController.addCategory)
+    .get(authorizationValidation.protect, adminController.getAllCategories)
+    .put(authorizationValidation.protect, adminController.editCategory);
 
 module.exports = router;

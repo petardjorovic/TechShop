@@ -1,0 +1,44 @@
+.close {
+  position: absolute;
+  top: -2px;
+  right: 7px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.content-header {
+  //   border: 1px solid black;
+  margin-top: 10px;
+  position: relative;
+
+  h4 {
+    @media screen and (max-width: "1024px") {
+      font-size: 20px;
+    }
+  }
+
+  h4 {
+    @media screen and (max-width: "768px") {
+      font-size: 16px;
+    }
+  }
+
+  h4 {
+    @media screen and (max-width: "768px") {
+      font-size: 14px;
+    }
+  }
+}
+
+.table-category-products {
+  @media screen and (max-width: "1024px") {
+    font-size: 14px;
+  }
+
+  @media screen and (max-width: "768px") {
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: "480px") {
+    font-size: 10px;
+  }
+}

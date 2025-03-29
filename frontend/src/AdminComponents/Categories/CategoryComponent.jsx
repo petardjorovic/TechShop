@@ -5,10 +5,15 @@ import { showLoader } from "../../store/loader/loaderSlice";
 import AddCategoryModal from "./Modals/AddCategoryModal";
 import { getAllCategories } from "../../services/categoryServices";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import ViewProductsByCategoryModal from "./Modals/ViewProductsByCategoryModal";
+import EditCategoryModal from "./Modals/EditCategoryModal";
 
 function CategoryComponent() {
   const [categories, setCategories] = useState([]);
   const [isAddCategoryModal, setIsCategoryModal] = useState(false);
+  const [isViewProductsModal, setIsViewProductsModal] = useState(false);
+  const [isEditCategoryModal, setIsEditCategoryModal] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState({});
   const dispatch = useDispatch();
 
   const fetchCategories = async () => {
@@ -23,6 +28,16 @@ function CategoryComponent() {
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  const openViewProductsModal = (category) => {
+    setCurrentCategory(category);
+    setIsViewProductsModal(true);
+  };
+
+  const openEditCategoryModal = (category) => {
+    setCurrentCategory(category);
+    setIsEditCategoryModal(true);
+  };
 
   return (
     <div className="category-wrapper">
@@ -52,9 +67,12 @@ function CategoryComponent() {
                       <td>{category.categoryName}</td>
                       <td>{category.categoryName.toLowerCase()}</td>
                       <td>
-                        <p>{category.products.length}</p>{" "}
+                        <p>{category.products.length}</p>
                         {category.products.length > 0 ? (
-                          <span className="has-product bg-info">
+                          <span
+                            className="has-product bg-info"
+                            onClick={() => openViewProductsModal(category)}
+                          >
                             <FaRegEye color="black" />
                           </span>
                         ) : (
@@ -64,7 +82,10 @@ function CategoryComponent() {
                         )}
                       </td>
                       <td>
-                        <button className="btn btn-warning me-2 align-self-start">
+                        <button
+                          className="btn btn-warning me-2 align-self-start"
+                          onClick={() => openEditCategoryModal(category)}
+                        >
                           Edit
                         </button>
                         <button className="btn btn-danger ms-2">Delete</button>
@@ -80,6 +101,19 @@ function CategoryComponent() {
         <AddCategoryModal
           setIsCategoryModal={setIsCategoryModal}
           rerenderView={fetchCategories}
+        />
+      )}
+      {isViewProductsModal && (
+        <ViewProductsByCategoryModal
+          setIsViewProductsModal={setIsViewProductsModal}
+          currentCategory={currentCategory}
+        />
+      )}
+
+      {isEditCategoryModal && (
+        <EditCategoryModal
+          setIsEditCategoryModal={setIsEditCategoryModal}
+          currentCategory={currentCategory}
         />
       )}
     </div>

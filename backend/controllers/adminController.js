@@ -139,4 +139,19 @@ const getAllCategories = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = { addProduct, deleteSingleProduct, editSingleProduct, getAllUsers, deleteUser, addCategory, getAllCategories };
+const editCategory = catchAsync(async (req, res, next) => {
+    console.log(req.body, 'req.body');
+    res.send('ok');
+    // TODO logika za edit category
+});
+
+module.exports = {
+    addProduct,
+    deleteSingleProduct,
+    editSingleProduct,
+    getAllUsers,
+    deleteUser,
+    addCategory,
+    getAllCategories,
+    editCategory,
+};

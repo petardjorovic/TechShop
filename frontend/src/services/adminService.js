@@ -117,3 +117,14 @@ export const addCategory = async (categoryName) => {
     };
   }
 };
+
+export const editCategory = async (categoryName) => {
+  try {
+    const res = await axios.put("/api/v1/admin/category", { categoryName });
+    console.log(res, "res");
+    return res;
+  } catch (err) {
+    console.error(err, "err iz servisa edit category");
+    return err;
+  }
+};
