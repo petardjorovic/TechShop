@@ -140,9 +140,29 @@ const getAllCategories = catchAsync(async (req, res, next) => {
 });
 
 const editCategory = catchAsync(async (req, res, next) => {
-    console.log(req.body, 'req.body');
-    res.send('ok');
-    // TODO logika za edit category
+    const editedCategory = await CategoryModel.findByIdAndUpdate(
+        req.body.id,
+        { categoryName: req.body.categoryName },
+        { new: true, runValidators: true }
+    );
+    if (!editedCategory) return next(new AppError('There is not category with this id', 400));
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Category name has been successufully changed',
+    });
+});
+
+const deleteCategory = catchAsync(async (req, res, next) => {
+    const deletedCategory = await CategoryModel.deleteOne({ _id: req.params.categoryId });
+    if (!deletedCategory.acknowledged && deletedCategory.deletedCount !== 1) {
+        return next(new AppError('There is not category with this id', 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        message: 'Category has been successufully deleted',
+    });
 });
 
 module.exports = {
@@ -154,4 +174,5 @@ module.exports = {
     addCategory,
     getAllCategories,
     editCategory,
+    deleteCategory,
 };

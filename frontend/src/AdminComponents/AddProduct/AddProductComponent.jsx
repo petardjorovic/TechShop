@@ -128,7 +128,7 @@ function AddProductComponent() {
             value={product.categoryId}
             onChange={handleChange}
           >
-            <option value="" disabled selected>
+            <option value="" disabled>
               Choose category
             </option>
             {categories.length > 0

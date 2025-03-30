@@ -7,12 +7,14 @@ import { getAllCategories } from "../../services/categoryServices";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import ViewProductsByCategoryModal from "./Modals/ViewProductsByCategoryModal";
 import EditCategoryModal from "./Modals/EditCategoryModal";
+import DeleteCategoryModal from "./Modals/DeleteCategoryModal";
 
 function CategoryComponent() {
   const [categories, setCategories] = useState([]);
   const [isAddCategoryModal, setIsCategoryModal] = useState(false);
   const [isViewProductsModal, setIsViewProductsModal] = useState(false);
   const [isEditCategoryModal, setIsEditCategoryModal] = useState(false);
+  const [isDeleteCategoryModal, setIsDeleteCategoryModal] = useState(false);
   const [currentCategory, setCurrentCategory] = useState({});
   const dispatch = useDispatch();
 
@@ -39,6 +41,11 @@ function CategoryComponent() {
     setIsEditCategoryModal(true);
   };
 
+  const openDeleteCategoryModal = (category) => {
+    setCurrentCategory(category);
+    setIsDeleteCategoryModal(true);
+  };
+
   return (
     <div className="category-wrapper">
       <div className="category-header">
@@ -59,41 +66,52 @@ function CategoryComponent() {
             </tr>
           </thead>
           <tbody>
-            {categories.length > 0
-              ? categories.map((category, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{category.categoryName}</td>
-                      <td>{category.categoryName.toLowerCase()}</td>
-                      <td>
-                        <p>{category.products.length}</p>
-                        {category.products.length > 0 ? (
-                          <span
-                            className="has-product bg-info"
-                            onClick={() => openViewProductsModal(category)}
-                          >
-                            <FaRegEye color="black" />
-                          </span>
-                        ) : (
-                          <span className="hasnt-product bg-danger">
-                            <FaRegEyeSlash />
-                          </span>
-                        )}
-                      </td>
-                      <td>
-                        <button
-                          className="btn btn-warning me-2 align-self-start"
-                          onClick={() => openEditCategoryModal(category)}
+            {categories.length > 0 ? (
+              categories.map((category, index) => {
+                return (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{category.categoryName}</td>
+                    <td>{category.categoryName.toLowerCase()}</td>
+                    <td>
+                      <p>{category.products.length}</p>
+                      {category.products.length > 0 ? (
+                        <span
+                          className="has-product bg-info"
+                          onClick={() => openViewProductsModal(category)}
                         >
-                          Edit
-                        </button>
-                        <button className="btn btn-danger ms-2">Delete</button>
-                      </td>
-                    </tr>
-                  );
-                })
-              : ""}
+                          <FaRegEye color="black" />
+                        </span>
+                      ) : (
+                        <span className="hasnt-product bg-danger">
+                          <FaRegEyeSlash />
+                        </span>
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-warning me-2 align-self-start"
+                        onClick={() => openEditCategoryModal(category)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-danger ms-2"
+                        onClick={() => openDeleteCategoryModal(category)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  There is not any category
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -114,6 +132,15 @@ function CategoryComponent() {
         <EditCategoryModal
           setIsEditCategoryModal={setIsEditCategoryModal}
           currentCategory={currentCategory}
+          rerenderView={fetchCategories}
+        />
+      )}
+
+      {isDeleteCategoryModal && (
+        <DeleteCategoryModal
+          setIsDeleteCategoryModal={setIsDeleteCategoryModal}
+          currentCategory={currentCategory}
+          rerenderView={fetchCategories}
         />
       )}
     </div>

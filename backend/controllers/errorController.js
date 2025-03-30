@@ -8,7 +8,7 @@ const sendErrorDev = (err, res) => {
 };
 
 const sendErrorProd = (err, res) => {
-    if (err.isOperatinal) {
+    if (err.isOperational) {
         res.status(err.statusCode).json({
             status: err.status,
             message: err.message,

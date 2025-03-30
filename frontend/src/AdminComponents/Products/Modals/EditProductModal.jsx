@@ -10,12 +10,18 @@ import "./EditProductModal.scss";
 import { useState } from "react";
 import { editSingleProduct } from "../../../services/adminService";
 
-function EditProductModal({ setIsEditModal, currentProduct, rerenderView }) {
+function EditProductModal({
+  setIsEditModal,
+  currentProduct,
+  rerenderView,
+  categories,
+}) {
   const dispatch = useDispatch();
   const [product, setProduct] = useState({
     id: currentProduct?._id,
     title: currentProduct?.title,
     description: currentProduct?.description,
+    categoryId: currentProduct?.categoryId._id,
     price: currentProduct?.price,
     image: currentProduct?.image,
   });
@@ -34,6 +40,15 @@ function EditProductModal({ setIsEditModal, currentProduct, rerenderView }) {
       : setIsDescriptionEmpty(false);
     !product.price ? setIsPriceEmpty(true) : setIsPriceEmpty(false);
     if (!product.title || !product.description || !product.price) return;
+
+    if (
+      product.title === currentProduct.title &&
+      product.description === currentProduct.description &&
+      product.categoryId === currentProduct.categoryId._id &&
+      !file
+    ) {
+      return;
+    }
 
     let formDataProduct;
     if (file) {
@@ -97,6 +112,25 @@ function EditProductModal({ setIsEditModal, currentProduct, rerenderView }) {
               onChange={handleChange}
               defaultValue={currentProduct.description}
             />
+          </div>
+          <div className="input-wrapper">
+            <LabelComponent>Category</LabelComponent>
+            <select
+              id="categoryId"
+              value={currentProduct.categoryId}
+              onChange={handleChange}
+            >
+              <option value="">{currentProduct.categoryId.categoryName}</option>
+              {categories.map((category, index) => {
+                if (category._id !== currentProduct.categoryId._id) {
+                  return (
+                    <option value={category._id} key={index}>
+                      {category.categoryName}
+                    </option>
+                  );
+                }
+              })}
+            </select>
           </div>
           <div className="input-wrapper">
             <LabelComponent htmlFor={"price"} color={isPriceEmpty}>

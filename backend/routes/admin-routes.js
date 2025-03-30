@@ -17,9 +17,10 @@ router
     .delete(authorizationValidation.protect, adminController.deleteUser);
 
 router
-    .route('/category')
+    .route('/category/:categoryId?')
     .post(authorizationValidation.protect, adminController.addCategory)
     .get(authorizationValidation.protect, adminController.getAllCategories)
-    .put(authorizationValidation.protect, adminController.editCategory);
+    .put(authorizationValidation.protect, adminController.editCategory)
+    .delete(authorizationValidation.protect, adminController.deleteCategory);
 
 module.exports = router;

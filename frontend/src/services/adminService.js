@@ -103,7 +103,7 @@ export const deleteUser = async (user) => {
 export const addCategory = async (categoryName) => {
   try {
     const res = await axios.post("/api/v1/admin/category", { categoryName });
-    if (res.status === 200 && res.data.status) {
+    if (res.status === 200 && res.data.status === "success") {
       return {
         status: res.data.status,
         message: res.data.message,
@@ -118,13 +118,38 @@ export const addCategory = async (categoryName) => {
   }
 };
 
-export const editCategory = async (categoryName) => {
+export const editCategory = async ({ id, categoryName }) => {
   try {
-    const res = await axios.put("/api/v1/admin/category", { categoryName });
-    console.log(res, "res");
-    return res;
+    const res = await axios.put("/api/v1/admin/category", { id, categoryName });
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
   } catch (err) {
     console.error(err, "err iz servisa edit category");
-    return err;
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
+  }
+};
+
+export const deleteCategory = async (categoryId) => {
+  try {
+    const res = await axios.delete(`/api/v1/admin/category/${categoryId}`);
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+  } catch (err) {
+    console.error(err, "err iz servisa delete category");
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
   }
 };

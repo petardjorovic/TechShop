@@ -8,8 +8,13 @@ import { useDispatch } from "react-redux";
 import { showLoader } from "../../../store/loader/loaderSlice";
 import "./EditCategoryModal.scss";
 import { editCategory } from "../../../services/adminService";
+import { toast } from "react-toastify";
 
-function EditCategoryModal({ setIsEditCategoryModal, currentCategory }) {
+function EditCategoryModal({
+  setIsEditCategoryModal,
+  currentCategory,
+  rerenderView,
+}) {
   const [newCategoryName, setNewCategoryName] = useState("");
   const [isCategoryEmpty, setIsCategoryEmpty] = useState(false);
   const dispatch = useDispatch();
@@ -20,9 +25,17 @@ function EditCategoryModal({ setIsEditCategoryModal, currentCategory }) {
     if (!newCategoryName) return;
     setIsEditCategoryModal(false);
     dispatch(showLoader(true));
-    const res = await editCategory(newCategoryName);
+    const res = await editCategory({
+      id: currentCategory._id,
+      categoryName: newCategoryName,
+    });
     dispatch(showLoader(false));
-    console.log(res, "res sa fronta edit category");
+    if (res.status === "success") {
+      rerenderView();
+      toast.success(res.message);
+    } else {
+      toast.error(res.message);
+    }
   };
   return (
     <Modal isOpen={true} ariaHideApp={false} style={customModalStyles} centered>

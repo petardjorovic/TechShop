@@ -6,9 +6,11 @@ import "./ProductsComponent.scss";
 import DeleteProductModal from "./Modals/DeleteProductModal";
 import EditProductModal from "./Modals/EditProductModal";
 import { urlConfig } from "../../config/urlConfig";
+import { getAllCategories } from "../../services/categoryServices";
 
 function ProductsComponent() {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState({});
   const dispatch = useDispatch();
@@ -21,8 +23,18 @@ function ProductsComponent() {
     if (res.status === "success") setProducts(res.products);
   };
 
+  const fetchCategories = async () => {
+    dispatch(showLoader(true));
+    const res = await getAllCategories();
+    dispatch(showLoader(false));
+    if (res.status === "success") {
+      setCategories(res.allCategories);
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
+    fetchCategories();
   }, []);
 
   const displayAllProducts = () => {
@@ -92,6 +104,7 @@ function ProductsComponent() {
           setIsEditModal={setIsEditModal}
           currentProduct={currentProduct}
           rerenderView={fetchProducts}
+          categories={categories}
         />
       )}
 
