@@ -1,0 +1,21 @@
+.container {
+  .statistics-wrapper {
+    display: flex;
+    gap: 10px;
+
+    @media screen and (max-width: "768px") {
+      flex-direction: column;
+    }
+
+    @media screen and (max-width: "480px") {
+    }
+
+    .box {
+      width: 250px;
+
+      @media screen and (max-width: "480px") {
+        width: 90%;
+      }
+    }
+  }
+}

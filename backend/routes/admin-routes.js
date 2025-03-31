@@ -14,7 +14,8 @@ router
 router
     .route('/user/:userId?/:userAvatar?')
     .get(authorizationValidation.protect, adminController.getAllUsers)
-    .delete(authorizationValidation.protect, adminController.deleteUser);
+    .delete(authorizationValidation.protect, adminController.deleteUser)
+    .put(authorizationValidation.protect, adminController.editUser);
 
 router
     .route('/category/:categoryId?')

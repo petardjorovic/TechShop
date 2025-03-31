@@ -5,11 +5,13 @@ import { getAllUsers } from "../../services/adminService";
 import "./UsersComponent.scss";
 import DeleteUserModal from "./Modals/DeleteUserModal";
 import { toast } from "react-toastify";
+import EditUserModal from "./Modals/EditUserModal";
 
 function UsersComponent() {
   const dispatch = useDispatch();
   const [allUsers, setAllUsers] = useState([]);
   const [isDeleteModal, setIsDeleteModal] = useState(false);
+  const [isEditModal, setIsEditModal] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
   useEffect(() => {
@@ -32,6 +34,11 @@ function UsersComponent() {
     setIsDeleteModal(true);
   };
 
+  const openEditUserModal = (user) => {
+    setIsEditModal(true);
+    setCurrentUser(user);
+  };
+
   const displayAllUsers = () => {
     return allUsers.map((user, index) => {
       return (
@@ -43,7 +50,12 @@ function UsersComponent() {
           <td>{user.role}</td>
           <td>
             <div className="btns-wrapper">
-              <button className="btn btn-warning">Edit</button>
+              <button
+                className="btn btn-warning"
+                onClick={() => openEditUserModal(user)}
+              >
+                Edit
+              </button>
               <button
                 className="btn btn-danger"
                 onClick={() => openDeleteModal(user)}
@@ -72,6 +84,14 @@ function UsersComponent() {
         </thead>
         <tbody>{allUsers.length > 0 && displayAllUsers()}</tbody>
       </table>
+      {isEditModal && (
+        <EditUserModal
+          setIsEditModal={setIsEditModal}
+          currentUser={currentUser}
+          rerenderView={fetchUsers}
+        />
+      )}
+
       {isDeleteModal && (
         <DeleteUserModal
           currentUser={currentUser}

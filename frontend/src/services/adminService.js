@@ -80,6 +80,24 @@ export const getAllUsers = async () => {
   }
 };
 
+export const editUser = async (user) => {
+  try {
+    const res = await axios.put("/api/v1/admin/user", user);
+    if (res.status === 200 && res.data.status === "success") {
+      return {
+        status: res.data.status,
+        message: res.data.message,
+      };
+    }
+  } catch (err) {
+    console.error(err, "greska iz servisa edit user");
+    return {
+      status: err.response.data.err.status,
+      message: err.response.data.message,
+    };
+  }
+};
+
 export const deleteUser = async (user) => {
   try {
     const res = await axios.delete(

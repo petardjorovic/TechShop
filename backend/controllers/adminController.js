@@ -74,6 +74,17 @@ const getAllUsers = catchAsync(async (req, res, next) => {
     });
 });
 
+const editUser = catchAsync(async (req, res, next) => {
+    const { email, ...newData } = req.body;
+    const updatedUser = await UserModel.findOneAndUpdate({ email }, newData, { new: true, runValidators: true });
+    if (!updatedUser) return next(new AppError('There si not user with this id', 404));
+
+    res.status(200).json({
+        status: 'success',
+        message: 'User has been successufully updated',
+    });
+});
+
 const deleteUser = catchAsync(async (req, res, next) => {
     const deletedUser = await UserModel.deleteOne({ _id: req.params.userId });
     if (deletedUser.acknowledged && deletedUser.deletedCount === 1) {
@@ -102,7 +113,6 @@ const deleteUser = catchAsync(async (req, res, next) => {
 const addCategory = catchAsync(async (req, res, next) => {
     const category = new CategoryModel(req.body);
     const savedCategory = await category.save();
-    console.log(savedCategory, 'savedCategory');
     if (!savedCategory) return next(new AppError("An error occurred, category couldn't be saved", 500));
 
     res.status(200).json({
@@ -175,4 +185,5 @@ module.exports = {
     getAllCategories,
     editCategory,
     deleteCategory,
+    editUser,
 };

@@ -8,6 +8,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import ViewProductsByCategoryModal from "./Modals/ViewProductsByCategoryModal";
 import EditCategoryModal from "./Modals/EditCategoryModal";
 import DeleteCategoryModal from "./Modals/DeleteCategoryModal";
+import { toast } from "react-toastify";
 
 function CategoryComponent() {
   const [categories, setCategories] = useState([]);
@@ -42,6 +43,10 @@ function CategoryComponent() {
   };
 
   const openDeleteCategoryModal = (category) => {
+    if (category.products.length > 0) {
+      toast.info("You cannot delete this category as it contains products");
+      return;
+    }
     setCurrentCategory(category);
     setIsDeleteCategoryModal(true);
   };

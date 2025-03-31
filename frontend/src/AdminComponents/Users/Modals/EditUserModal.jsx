@@ -1,65 +1,45 @@
 import Modal from "react-modal";
 import customModalStyles from "../../../../public/js/customModalStyles";
-import ButtonComponent from "../../../components/Button/ButtonComponent";
+import "./EditUserModal.scss";
 import LabelComponent from "../../../components/Label/LabelComponent";
 import InputComponent from "../../../components/Input/InputComponent";
-import "./EditProfileModal.scss";
-import { useState } from "react";
+import ButtonComponent from "../../../components/Button/ButtonComponent";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { showLoader } from "../../../store/loader/loaderSlice";
-import { editUserProfile, getSingleUser } from "../../../services/userService";
+import { editUser } from "../../../services/adminService";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
 
-function EditProfileModal({ user, rerenderView, setIsEditModal }) {
+function EditUserModal({ setIsEditModal, currentUser, rerenderView }) {
   const [data, setData] = useState({
-    username: user?.username,
-    firstName: user?.firstName,
-    lastName: user?.lastName,
-    gender: user?.gender,
-    address: user?.address,
-    city: user?.city,
-    phoneNumber: user?.phoneNumber,
-    postCode: user?.postCode,
+    username: currentUser?.username,
+    firstName: currentUser?.firstName,
+    lastName: currentUser?.lastName,
+    address: currentUser?.address,
+    city: currentUser?.city,
+    phoneNumber: currentUser?.phoneNumber,
+    postCode: currentUser?.postCode,
+    gender: currentUser?.gender,
+    status: currentUser?.status,
+    role: currentUser?.role,
   });
-  const [file, setFile] = useState(null);
-  const [isUsernameEmpty, setIsUsernameEmpty] = useState(false);
   const dispatch = useDispatch();
-
-  const handleChange = (e) => {
-    const { id, value } = e.target;
-    setData({ ...data, [id]: value });
-  };
-
-  const handleFile = (e) => {
-    setFile(e.target.files[0]);
-  };
+  const [isUsernameEmpty, setIsUsernameEmpty] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    !data.username ? setIsUsernameEmpty(true) : setIsUsernameEmpty(false);
+    if (!data.username) return;
     let isChanged = false;
-    for (const key in data) {
-      if (data[key] !== user[key]) {
+    for (let key in data) {
+      if (data[key] !== currentUser[key]) {
         isChanged = true;
       }
     }
-    if (!isChanged && file === null) {
-      return;
-    }
-    if (!data.username) setIsUsernameEmpty(true);
-    if (!data.username) return;
+    if (!isChanged) return;
     setIsEditModal(false);
-    let userFormData;
-    if (file) {
-      userFormData = new FormData();
-      userFormData.append("file", file);
-      userFormData.append("data", JSON.stringify(data));
-    }
-
-    let hasFormData =
-      userFormData && userFormData.has("file") && userFormData.has("data");
     dispatch(showLoader(true));
-    const res = await editUserProfile(hasFormData ? userFormData : data);
+    const res = await editUser({ ...data, email: currentUser.email });
     dispatch(showLoader(false));
     if (res.status === "success") {
       rerenderView();
@@ -69,10 +49,27 @@ function EditProfileModal({ user, rerenderView, setIsEditModal }) {
     }
   };
 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    if (id === "status") {
+      let stat;
+      if (value === "true") {
+        stat = true;
+      } else if (value === "false") {
+        stat = false;
+      } else {
+        stat = data.status;
+      }
+      setData({ ...data, status: stat });
+    } else {
+      setData({ ...data, [id]: value });
+    }
+  };
+
   return (
     <Modal isOpen={true} ariaHideApp={false} style={customModalStyles} centered>
       <div>
-        <form className="edit-profile-form" onSubmit={handleSubmit}>
+        <form className="edit-user-form" onSubmit={handleSubmit}>
           <div className="top-content">
             <div className="left">
               <div className="input-wrapper">
@@ -154,18 +151,65 @@ function EditProfileModal({ user, rerenderView, setIsEditModal }) {
                   defaultValue={data.gender}
                   onChange={handleChange}
                 >
-                  <option value=""></option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
+                  <option value={currentUser.gender}>
+                    {currentUser.gender}
+                  </option>
+                  {!currentUser.gender && (
+                    <>
+                      <option value={"male"}>male</option>
+                      <option value={"female"}>female</option>
+                    </>
+                  )}
+                  {currentUser.gender === "male" && (
+                    <>
+                      <option value={"female"}>female</option>
+                    </>
+                  )}
+                  {currentUser.gender === "female" && (
+                    <>
+                      <option value={"male"}>male</option>
+                    </>
+                  )}
                 </select>
               </div>
-              <div className="input-wrapper-img">
-                <LabelComponent htmlFor={"avatar"}>Upload image</LabelComponent>
-                <InputComponent
-                  id={"avatar"}
-                  type={"file"}
-                  onChange={handleFile}
-                />
+              <div className="input-status">
+                <LabelComponent htmlFor={"status"}>
+                  Activation status:
+                </LabelComponent>
+                <select
+                  name="status"
+                  id="status"
+                  defaultValue={data.status}
+                  onChange={handleChange}
+                >
+                  {currentUser.status ? (
+                    <>
+                      <option value={true}>Active</option>
+                      <option value={false}>Inactive</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value={false}>Inactive</option>
+                      <option value={true}>Active</option>
+                    </>
+                  )}
+                </select>
+              </div>
+              <div className="input-role">
+                <LabelComponent htmlFor={"role"}>Role:</LabelComponent>
+                <select
+                  name="role"
+                  id="role"
+                  onChange={handleChange}
+                  defaultValue={data.role}
+                >
+                  <option value={currentUser.role}>{currentUser.role}</option>
+                  {currentUser.role === "admin" ? (
+                    <option value={"user"}>user</option>
+                  ) : (
+                    <option value={"admin"}>admin</option>
+                  )}
+                </select>
               </div>
             </div>
           </div>
@@ -179,7 +223,7 @@ function EditProfileModal({ user, rerenderView, setIsEditModal }) {
               Cancel
             </ButtonComponent>
             <ButtonComponent className={"btn btn-success"} type={"submit"}>
-              Edit
+              Save
             </ButtonComponent>
           </div>
         </form>
@@ -188,4 +232,4 @@ function EditProfileModal({ user, rerenderView, setIsEditModal }) {
   );
 }
 
-export default EditProfileModal;
+export default EditUserModal;
