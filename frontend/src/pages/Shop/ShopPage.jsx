@@ -3,11 +3,13 @@ import { getAllProducts } from "../../services/productServices";
 import { useDispatch } from "react-redux";
 import { showLoader } from "../../store/loader/loaderSlice";
 import ProductCardComponent from "../../components/ProductCard/ProductCardComponent";
+import SearchBarComponent from "../../components/SearchBar/SearchBarComponent";
 import "./ShopPage.scss";
 
 function ShopPage() {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -16,6 +18,7 @@ function ShopPage() {
       dispatch(showLoader(false));
       if (res.status === "success") {
         setProducts(res.products);
+        setFilteredProducts(res.products);
       }
     };
     fetchAllProducts();
@@ -23,9 +26,14 @@ function ShopPage() {
   return (
     <>
       <div className="container">
+        <SearchBarComponent
+          products={products}
+          setFilteredProducts={setFilteredProducts}
+          filteredProducts={filteredProducts}
+        />
         <div className="products-wrapper">
-          {products.length > 0 &&
-            products.map((el, i) => {
+          {filteredProducts.length > 0 &&
+            filteredProducts.map((el, i) => {
               return <ProductCardComponent key={i} product={el} />;
             })}
         </div>
