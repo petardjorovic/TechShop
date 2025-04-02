@@ -9,16 +9,26 @@ import { showLoader } from "../../../store/loader/loaderSlice";
 import { addCategory } from "../../../services/adminService";
 import { toast } from "react-toastify";
 
-function AddCategoryModal({ setIsCategoryModal, rerenderView }) {
+function AddCategoryModal({ setIsCategoryModal, rerenderView, categories }) {
   const [categoryName, setCategoryName] = useState("");
   const [isCategoryEmpty, setIsCategoryEmpty] = useState(false);
+  const [existsCategory, setExistsCategory] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     !categoryName ? setIsCategoryEmpty(true) : setIsCategoryEmpty(false);
     if (!categoryName) return;
-
+    let isMatch = false;
+    for (let i = 0; i < categories.length; i++) {
+      if (
+        categories[i].categoryName.toLowerCase() === categoryName.toLowerCase()
+      ) {
+        setExistsCategory(true);
+        isMatch = true;
+      }
+    }
+    if (isMatch) return;
     setIsCategoryModal(false);
     dispatch(showLoader(true));
     const res = await addCategory(categoryName);
@@ -33,8 +43,15 @@ function AddCategoryModal({ setIsCategoryModal, rerenderView }) {
     <Modal isOpen={true} ariaHideApp={false} style={customModalStyles} centered>
       <form className="add-category-form" onSubmit={handleSubmit}>
         <div className="input-wrapper">
-          <LabelComponent htmlFor={"categoryName"} color={isCategoryEmpty}>
-            {isCategoryEmpty ? "Category Name is required!" : "Category Name"}
+          <LabelComponent
+            htmlFor={"categoryName"}
+            color={isCategoryEmpty || existsCategory}
+          >
+            {isCategoryEmpty
+              ? "Category Name is required!"
+              : existsCategory
+              ? "Category Name exists"
+              : "Category Name"}
           </LabelComponent>
           <InputComponent
             id={"categoryName"}

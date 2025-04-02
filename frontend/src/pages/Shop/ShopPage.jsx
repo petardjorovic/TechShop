@@ -11,7 +11,7 @@ function ShopPage() {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [productsPerPage, setProductsPerPage] = useState(6);
+  const [productsPerPage, setProductsPerPage] = useState(9);
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {

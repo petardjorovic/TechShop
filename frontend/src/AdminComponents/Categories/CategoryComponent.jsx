@@ -124,6 +124,7 @@ function CategoryComponent() {
         <AddCategoryModal
           setIsCategoryModal={setIsCategoryModal}
           rerenderView={fetchCategories}
+          categories={categories}
         />
       )}
       {isViewProductsModal && (

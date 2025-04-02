@@ -3,14 +3,21 @@ const AppError = require('./AppError');
 module.exports = (func) => {
     return (req, res, next) => {
         func(req, res, next).catch((err) => {
-            console.error(err, 'catchAsync error');
-
             //* Mongoose validation
             if (err.name === 'ValidationError') {
                 let messages = Object.values(err.errors).map((el) => el.message);
                 let message = messages.join('. ');
                 return next(new AppError(message, 400));
             }
+
+            //* Mongoose Duplicate Key
+            if (err.code === 11000) {
+                const [value] = Object.values(err.keyValue);
+                let message = `There is already a field with value ${value}.Please use another value.`;
+                return next(new AppError(message, 400));
+            }
+
+            console.error(err, 'catchAsync error');
 
             //* Stripe validation
             switch (err?.type) {

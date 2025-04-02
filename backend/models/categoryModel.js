@@ -5,6 +5,7 @@ const categorySchema = new Schema({
     categoryName: {
         type: String,
         required: [true, 'Category name is required'],
+        unique: true,
     },
 });
 
