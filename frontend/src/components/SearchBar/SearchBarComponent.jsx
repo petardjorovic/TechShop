@@ -9,6 +9,7 @@ function SearchBarComponent({
   products,
   setFilteredProducts,
   filteredProducts,
+  setCurrentPage,
 }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [slider, setSlider] = useState(0);
@@ -36,7 +37,7 @@ function SearchBarComponent({
         return prod.title.toLowerCase().includes(newTerm);
       });
     }
-
+    setCurrentPage(1);
     applySort(filtered);
   };
 

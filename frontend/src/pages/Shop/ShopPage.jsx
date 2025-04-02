@@ -5,11 +5,14 @@ import { showLoader } from "../../store/loader/loaderSlice";
 import ProductCardComponent from "../../components/ProductCard/ProductCardComponent";
 import SearchBarComponent from "../../components/SearchBar/SearchBarComponent";
 import "./ShopPage.scss";
+import PaginationComponent from "../../components/Pagination/PaginationComponent";
 
 function ShopPage() {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [productsPerPage, setProductsPerPage] = useState(6);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchAllProducts = async () => {
@@ -23,6 +26,14 @@ function ShopPage() {
     };
     fetchAllProducts();
   }, []);
+
+  const lastProductsIndex = currentPage * productsPerPage;
+  const firstProductsIndex = lastProductsIndex - productsPerPage;
+  const paginationProducts = filteredProducts.slice(
+    firstProductsIndex,
+    lastProductsIndex
+  );
+
   return (
     <>
       <div className="container">
@@ -30,13 +41,27 @@ function ShopPage() {
           products={products}
           setFilteredProducts={setFilteredProducts}
           filteredProducts={filteredProducts}
+          setCurrentPage={setCurrentPage}
         />
         <div className="products-wrapper">
-          {filteredProducts.length > 0 &&
-            filteredProducts.map((el, i) => {
+          {/* filteredProducts */}
+          {paginationProducts.length > 0 ? (
+            paginationProducts.map((el, i) => {
               return <ProductCardComponent key={i} product={el} />;
-            })}
+            })
+          ) : (
+            <div>There are no products</div>
+          )}
         </div>
+        {filteredProducts.length > 0 && (
+          <PaginationComponent
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+            filteredProducts={filteredProducts}
+            productsPerPage={productsPerPage}
+            setFilteredProducts={setFilteredProducts}
+          />
+        )}
       </div>
     </>
   );
