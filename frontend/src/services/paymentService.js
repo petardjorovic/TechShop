@@ -11,11 +11,13 @@ export const makePayment = async (paymentInfo) => {
       };
     }
   } catch (err) {
-    console.error(err);
-
+    console.error(err, "err iz servisa make payment");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Make payment failed. Please try again.",
     };
   }
 };

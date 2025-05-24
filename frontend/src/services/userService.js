@@ -13,10 +13,14 @@ export const register = async (user) => {
       status: res.data.err.status,
       message: res.data.message,
     };
-  } catch (error) {
+  } catch (err) {
+    console.error(err, "err iz servisa register");
     return {
-      status: error.response.data.err.status,
-      message: error.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Register failed. Please try again.",
     };
   }
 };
@@ -35,10 +39,14 @@ export const login = async (user) => {
       status: res.data.err.status,
       message: res.data.message,
     };
-  } catch (error) {
+  } catch (err) {
+    console.error(err, "err iz servisa login");
     return {
-      status: error.response.data.err.status,
-      message: error.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Register failed. Please try again.",
     };
   }
 };
@@ -55,8 +63,11 @@ export const changeUserPassword = async (passwords) => {
   } catch (err) {
     console.error(err, "err iz servisa change password");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Change password failed. Please try again.",
     };
   }
 };
@@ -74,8 +85,11 @@ export const forgotPassword = async (email) => {
   } catch (err) {
     console.error(err, "err iz servisa forgot password");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Forgot password failed. Please try again.",
     };
   }
 };
@@ -95,8 +109,11 @@ export const resetPassword = async (data) => {
   } catch (err) {
     console.error(err, "err iz servisa reset password");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Reset password failed. Please try again.",
     };
   }
 };
@@ -113,8 +130,11 @@ export const editUserProfile = async (data) => {
   } catch (err) {
     console.error(err, "err iz servisa edit user");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Edit user profile failed. Please try again.",
     };
   }
 };
@@ -131,8 +151,11 @@ export const getSingleUser = async () => {
   } catch (err) {
     console.error(err, "err iz servisa get user");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Request failed. Please try again.",
     };
   }
 };

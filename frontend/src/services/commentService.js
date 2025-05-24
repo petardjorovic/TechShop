@@ -10,9 +10,13 @@ export const addProductComment = async (comment) => {
       };
     }
   } catch (err) {
+    console.error(err, "err iz servisa add product comment");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Add product comment failed. Please try again.",
     };
   }
 };
@@ -27,11 +31,13 @@ export const getProductComments = async (productId) => {
       };
     }
   } catch (err) {
-    console.error(err);
-
+    console.error(err, "err iz servisa get product comments");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Request failed. Please try again.",
     };
   }
 };
@@ -46,9 +52,13 @@ export const getAllComments = async () => {
       };
     }
   } catch (err) {
+    console.error(err, "err iz servisa get all comment");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Request failed. Please try again.",
     };
   }
 };
@@ -63,9 +73,13 @@ export const changeCommentStatus = async (comment) => {
       };
     }
   } catch (err) {
+    console.error(err, "err iz servisa change comment status");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Change comment status failed. Please try again.",
     };
   }
 };
@@ -82,8 +96,11 @@ export const deleteComment = async (commentId) => {
   } catch (err) {
     console.error(err, "err iz servisa delete comment");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Delete comment failed. Please try again.",
     };
   }
 };

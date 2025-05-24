@@ -12,8 +12,11 @@ export const getAllCategories = async () => {
   } catch (err) {
     console.error(err, "err iz servisa get all categories");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Request failed. Please try again.",
     };
   }
 };

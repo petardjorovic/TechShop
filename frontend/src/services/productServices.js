@@ -3,18 +3,20 @@ import axios from "axios";
 export const getAllProducts = async () => {
   try {
     const res = await axios.get("/api/v1/products");
-    // console.log(res, "res iz servisa get all products");
-
     if (res.status === 200 && res.data.status === "success") {
       return {
         status: res.data.status,
         products: res.data.products,
       };
     }
-  } catch (error) {
+  } catch (err) {
+    console.error(err, "err iz servisa get all products");
     return {
-      status: error.response.data.err.status,
-      message: error.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Request failed. Please try again.",
     };
   }
 };
@@ -28,10 +30,14 @@ export const getSingleProduct = async (productId) => {
         product: res.data.product,
       };
     }
-  } catch (error) {
+  } catch (err) {
+    console.error(err, "err iz servisa get single product");
     return {
-      status: error.response.data.err.status,
-      message: error.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Request failed. Please try again.",
     };
   }
 };
@@ -55,8 +61,11 @@ export const rateSingleProduct = async (rate, productId) => {
   } catch (err) {
     console.error(err, "err iz servisa rate product");
     return {
-      status: err.response.data.err.status,
-      message: err.response.data.message,
+      status: err.response?.data?.error?.status || "error",
+      message:
+        err.response?.data?.message ||
+        err.message ||
+        "Rate product failed. Please try again.",
     };
   }
 };
