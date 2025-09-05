@@ -70,6 +70,9 @@ function NavigationComponent() {
     <header>
       <div className="container">
         <div className="navigation-wrapper">
+          <div className="title-wrapper">
+            <h1 className="title">TechShop</h1>
+          </div>
           <div className="currency">
             <label htmlFor="currency">Currency</label>
             <select

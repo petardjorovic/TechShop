@@ -8,10 +8,22 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 10px;
 
     @media screen and (max-width: $small-screen) {
       flex-direction: column;
       gap: 1.5rem;
+    }
+
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      .title {
+        font-size: 32px;
+        font-weight: 600;
+      }
     }
 
     .currency {
